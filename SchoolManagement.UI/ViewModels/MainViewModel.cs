@@ -22,6 +22,9 @@ namespace SchoolManagement.UI.ViewModels
         private readonly ILoggedInUser _loggedInUser;
         private readonly IEventAggregator _events;
 
+        private bool _isSideMenuVisible;
+        private bool _isMenuBarVisible;
+
         public MainViewModel(HomeViewModel homeViewModel,
                              SimpleContainer simpleContainer,
                              IAPIHelper apiHelper,
@@ -49,8 +52,35 @@ namespace SchoolManagement.UI.ViewModels
         public Task HandleAsync(LogInEvent logInEvent, CancellationToken cancellationToken)
         {
             ActivateItemAsync(_homeViewModel);
+            IsSideMenuVisible = true;
+            IsMenuBarVisible = true;
             return Task.CompletedTask;
         }
+        #endregion
+
+        #region Public Prop
+
+        public bool IsSideMenuVisible
+        {
+            get { return _isSideMenuVisible; }
+            set 
+            { 
+                _isSideMenuVisible = value;
+                NotifyOfPropertyChange(() => IsSideMenuVisible);
+            }
+        }
+
+        public bool IsMenuBarVisible
+        {
+            get { return _isMenuBarVisible; }
+            set 
+            {
+                _isMenuBarVisible = value;
+                NotifyOfPropertyChange(() => IsMenuBarVisible);
+            }
+        }
+
+
 
         #endregion
     }

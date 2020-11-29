@@ -4,58 +4,298 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolManagement.UI.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         mc:Ignorable="d"
         Title="Zizou School Managament"
+        Foreground="White"
         ResizeMode="CanResize"
         SizeToContent="WidthAndHeight"
         Topmost="True"
         WindowStartupLocation="CenterScreen" 
         WindowStyle="None" 
-        FontFamily="Segoe UI Emoji">
+        FontFamily="Segoe UI Emoji"
+        d:DesignHeight="600"
+        d:DesignWidth="800">
+
+    <Window.Resources>
+        <Storyboard x:Key="OpenMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="70"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="200"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
+                <EasingDoubleKeyFrame KeyTime="0" Value="200"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="70"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!--// Text font style //-->
+        <Style x:Key="font_style"
+               TargetType="TextBlock">
+            <Setter Property="FontFamily"
+                    Value="Fonts/Roboto-Light.ttf #Roboto"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Left"/>
+            <Setter Property="Foreground"
+                    Value="White"/>
+            <Setter Property="FontSize"
+                    Value="20"/>
+        </Style>
+
+        <!--// Tooltip Style Template //-->
+
+        <Style TargetType="ToolTip" x:Key="tt_style">
+            <Setter Property="Placement" Value="Right"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="Background" Value="#4A5668"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Fonts/Roboto-Light.ttf #Roboto"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="PlacementRectangle" Value="60,0,0,0"/>
+            <Setter Property="HorizontalOffset" Value="15"/>
+            <Setter Property="VerticalOffset" Value="6"/>
+            <Setter Property="HasDropShadow" Value="True"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+    </Window.Resources>
     
-    <Grid x:Name="MainGrid">
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="ButtonCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+    <Grid Background="White">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <!--// Backgroud Color-->
-
-        <Grid x:Name="Nav_Bar"
-              Grid.Column="0"
-              Grid.Row="0"
-              Grid.RowSpan="3">
-            <StackPanel x:Name="Toggle_StackPanel">
-                <!-- Toggle Button-->
-                <Grid Height="90">
-                    <ToggleButton x:Name="Toggle_Menu"
-                                  Grid.Column="0"
-                                  VerticalAlignment="Center"
-                                  HorizontalAlignment="Left"
-                                  Margin="18,-20,0,0"
-                                  Height="30"
-                                  Width="30"
-                                  BorderThickness="0">
-                        
-                    </ToggleButton>
-                    
-                </Grid>
-                
+        <Grid Height="60"
+              VerticalAlignment="Top"
+              Background="#2E333A"
+              Visibility="{Binding IsMenuBarVisible, Converter={StaticResource BooleanToVisibilityConverter},FallbackValue=Collapsed}">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="1"
+                                  ShadowDepth="1"
+                                  Color="#FFACACAC"/>
+            </Grid.Effect>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
+                <TextBlock x:Name="UserName"
+                           VerticalAlignment="Center"
+                           FontSize="16"/>
+                <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges"
+                                         StaysOpen="False"
+                                         Margin="10">
+                    <StackPanel Width="150">
+                        <Button Content="Settings"/>
+                        <Button Content="Account"/>
+                        <Button Content="Help"/>
+                        <Separator/>
+                        <Button Content="Logout"
+                                x:Name="LogOut"/>
+                    </StackPanel>
+                </materialDesign:PopupBox>
             </StackPanel>
-            
-            
-        </Grid>        
-        <!--#region Content-->
-        <ContentControl Grid.Row="1"
-                        Grid.Column="1"
-                        x:Name="ActiveItem"/>
-        <!--#endregion-->
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="22">School Management System</TextBlock>
+        </Grid>
+
+        <Grid x:Name="GridMenu"
+              Width="70"
+              HorizontalAlignment="Left"
+              Background="#2E333A"
+              Visibility="{Binding IsSideMenuVisible, Converter={StaticResource BooleanToVisibilityConverter},FallbackValue=Collapsed}">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="2" ShadowDepth="1" Color="#FFAEAEAE"/>
+            </Grid.Effect>
+            <StackPanel>
+
+                <Grid RenderTransformOrigin="0.5,0.5">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+
+                    <Button x:Name="ButtonOpenMenu"
+                            Height="60"
+                            Width="60"
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Foreground="White"
+                            Click="ButtonOpenMenu_Click">
+
+                        <materialDesign:PackIcon Kind="Menu"
+                                                 Width="25"
+                                                 Height="25"/>
+                    </Button>
+
+                    <Button x:Name="ButtonCloseMenu"
+                            Visibility="Collapsed"
+                            Height="60"
+                            Width="60"
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            Background="{x:Null}"
+                            BorderBrush="{x:Null}"
+                            Foreground="White"
+                            Click="ButtonCloseMenu_Click">
+                        <materialDesign:PackIcon Kind="Menu" Width="25" Height="25"/>
+                    </Button>
+                    <!--<Image Height="80" VerticalAlignment="Bottom"/>-->
+                </Grid>
+
+                <ListView x:Name="ListViewMenu"
+                          Background="#2E333A"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+
+                    <ListViewItem x:Name="ItemHome"
+                                  Height="60"
+                                  MouseEnter="Hover_over">
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Home"
+                                                     Foreground="#54959E"
+                                                     Width="35"
+                                                     Height="35"
+                                                     Margin="10 0"/>
+                            <TextBlock Text="Acceuil"
+                                       Margin="20 10"
+                                       Style="{StaticResource font_style}"/>
+                        </StackPanel>
+                        <ListViewItem.ToolTip>
+                            <ToolTip x:Name="tt_home"
+                                     Content="Acceuil"
+                                     Style="{StaticResource tt_style}"/>
+                        </ListViewItem.ToolTip>
+
+                    </ListViewItem>
+
+                    <ListViewItem x:Name="ItemStudent"
+                                  Height="60"
+                                  MouseEnter="Hover_over">
+
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="User"
+                                                     Foreground="#FFFF40"
+                                                     Width="35"
+                                                     Height="35"
+                                                     Margin="10 0"/>
+
+                            <TextBlock Text="Etudiants"
+                                       Margin="20 10"
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource font_style}"/>
+                        </StackPanel>
+                        <ListViewItem.ToolTip>
+
+                            <ToolTip x:Name="tt_etudiants"
+                                     Content="Etudiants"
+                                     Style="{StaticResource tt_style}"/>
+                        </ListViewItem.ToolTip>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60"
+                                  MouseEnter="Hover_over">
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <materialDesign:PackIcon Kind="Pencil"
+                                                     Foreground="#FF5B00"
+                                                     Width="35"
+                                                     Height="35"
+                                                     Margin="8,0,0,0"/>
+
+                            <TextBlock Text="Classes"
+                                       Margin="25,0,0,0"
+                                       VerticalAlignment="Center"
+                                       Style="{StaticResource font_style}"/>
+                        </StackPanel>
+
+                        <ListViewItem.ToolTip>
+                            <ToolTip x:Name="tt_classes"
+                                     Content="Classes"
+                                     Style="{StaticResource tt_style}"/>
+
+                        </ListViewItem.ToolTip>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60"
+                                  MouseEnter="Hover_over">
+                        <StackPanel Orientation="Horizontal">
+
+                            <materialDesign:PackIcon Kind="HomeAccount"
+                                                     Foreground="#E0EC1D"
+                                                     Width="35"
+                                                     Height="35"
+                                                     Margin="8,0,0,0"/>
+
+                            <TextBlock Text="Départements"
+                                       Margin="25,0,0,0"
+                                       Style="{StaticResource font_style}"/>
+                        </StackPanel>
+                        <ListViewItem.ToolTip>
+
+                            <ToolTip x:Name="tt_departments"
+                                     Content="Départements"
+                                     Style="{StaticResource tt_style}"/>
+
+                        </ListViewItem.ToolTip>
+                    </ListViewItem>
+
+                    <ListViewItem Height="60"
+                                  MouseEnter="Hover_over">
+                        <StackPanel Orientation="Horizontal">
+
+                            <materialDesign:PackIcon Kind="Logout"
+                                                     Foreground="#F50093"
+                                                     Width="35"
+                                                     Height="35"
+                                                     Margin="8,0,0,0"/>
+
+
+                            <TextBlock Text="Sign Out"
+                                           Margin="25,0,0,0"
+                                           Style="{StaticResource font_style}"/>
+                        </StackPanel>
+                        <ListViewItem.ToolTip>
+
+                            <ToolTip x:Name="tt_signOut"
+                                     Content="Se déconnecter"
+                                     Style="{StaticResource tt_style}"/>
+
+                        </ListViewItem.ToolTip>
+                    </ListViewItem>
+                </ListView>
+            </StackPanel>
+        </Grid>
+
+        <!--Active Item-->
+        <Grid x:Name="GridMain"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Bottom"
+              Height="540"
+              Width="730" PreviewMouseLeftButtonDown="Mouse_Down">
+            <ContentControl x:Name="ActiveItem"/>
+        </Grid>
+
+
     </Grid>
 </Window>
