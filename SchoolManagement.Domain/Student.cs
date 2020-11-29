@@ -30,6 +30,8 @@ namespace SchoolManagement.Domain
 
         public string MainPhotoUrl { get; set; }
 
+        public ICollection<StudentClass> Classes { get; set; }
+
 
     }
 }

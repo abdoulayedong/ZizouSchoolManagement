@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SchoolManagement.Domain
 {
-    public class Class
+    public class Subject
     {
         [Key]
         public int Id { get; set; }
@@ -16,11 +16,7 @@ namespace SchoolManagement.Domain
         [StringLength(50)]
         public string Code { get; set; }
 
-        public int NumberOfStudents { get; set; }
-        public int NumberOfCourses { get; set; }
-        public int NumberOfProfessors { get; set; }
-
-        ICollection<StudentClass> Students { get; set; }
-
+        public int HoursAmount { get; set; }
+        public int TotalWeekAmount { get; set; }
     }
 }
