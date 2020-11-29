@@ -1,8 +1,7 @@
-﻿<UserControl x:Class="SchoolManagement.UI.Views.DepartmentView"
+﻿<UserControl x:Class="SchoolManagement.UI.Views.DashboardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:cal="http://www.caliburnproject.org">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -57,18 +56,18 @@
                     HorizontalContentAlignment="Left"
                     materialDesign:ButtonAssist.CornerRadius="3">
                 <Button.Content>
-                    <StackPanel Orientation="Horizontal">                        
-                    <materialDesign:PackIcon Margin="-5 0 8 0" 
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Margin="-5 0 8 0" 
                                              Width="50"
                                              Height="50"                                                 
                                              Kind="Person"/>
-                        <StackPanel>                            
-                        <TextBlock FontSize="25"
+                        <StackPanel>
+                            <TextBlock FontSize="25"
                                    Margin="60 0 0 0" Text="0"/>
-                        <TextBlock FontSize="12"
+                            <TextBlock FontSize="12"
                                    Text="Elèves inscrits"/>
                         </StackPanel>
-                    </StackPanel>           
+                    </StackPanel>
                 </Button.Content>
             </Button>
 
@@ -137,7 +136,7 @@
                     </StackPanel>
                 </Button.Content>
             </Button>
-            
+
             <DataGrid Name="Students"
                       Grid.Row="7"
                       Grid.Column="0"
@@ -169,6 +168,6 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-        </Grid>        
+        </Grid>
     </Grid>
 </UserControl>

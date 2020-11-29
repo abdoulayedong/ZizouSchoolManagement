@@ -1,5 +1,6 @@
 ﻿using Caliburn.Micro;
 using SchoolManagement.Data;
+using SchoolManagement.Data.Repositories;
 using SchoolManagement.UI.Helpers;
 using SchoolManagement.UI.Library.API;
 using SchoolManagement.UI.Library.Models;
@@ -37,7 +38,12 @@ namespace SchoolManagement.UI
                 .Singleton<ILoggedInUser, LoggedInUser>()
                 .Singleton<IAPIHelper, APIHelper>();
 
-            _container.PerRequest<SchoolManagmentDBContext>();
+            _container
+                .PerRequest<SchoolManagmentDBContext>()
+                .PerRequest<IStudentRepository, StudentRepository>()
+                .PerRequest<IClassRepository, ClassRepository>()
+                .PerRequest<ICourseRepository, CourseRepository>()
+                .PerRequest<IDepartmentRepository, DepartmentRepository>();
 
             GetType().Assembly.GetTypes()
                .Where(type => type.IsClass)
