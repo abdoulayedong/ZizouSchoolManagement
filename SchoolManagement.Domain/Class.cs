@@ -20,7 +20,10 @@ namespace SchoolManagement.Domain
         public int NumberOfCourses { get; set; }
         public int NumberOfProfessors { get; set; }
 
-        ICollection<StudentClass> Students { get; set; }
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
+
+        public ICollection<ClassSubject> Subjects { get; set; }
 
     }
 }

@@ -18,5 +18,8 @@ namespace SchoolManagement.Domain
 
         public int HoursAmount { get; set; }
         public int TotalWeekAmount { get; set; }
+
+        public ICollection<StudentSubject> Students { get; set; }
+        public ICollection<ClassSubject> Classes { get; set; }
     }
 }
