@@ -52,6 +52,14 @@ namespace SchoolManagement.UI.ViewModels
             IsMenuBarVisible = true;
             return Task.CompletedTask;
         }
+
+        public Task GetDashbord()
+        {
+            ActivateItemAsync(_simpleContainer.GetInstance<DashboardViewModel>());
+            IsSideMenuVisible = true;
+            IsMenuBarVisible = true;
+            return Task.CompletedTask;
+        }
         #endregion
 
         #region LogOut Command
