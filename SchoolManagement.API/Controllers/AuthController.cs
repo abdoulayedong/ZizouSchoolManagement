@@ -14,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using SchoolManagement.API.Helpers;
 using SchoolManagement.API.Models;
 using SchoolManagement.API.Repositories;
+using SchoolManagement.Data.DTOs;
 using SchoolManagement.Domain;
 
 namespace SchoolManagement.API.Controllers
@@ -25,12 +26,16 @@ namespace SchoolManagement.API.Controllers
         private readonly IUserRepository _repository;
         private readonly IMapper _mapper;
         private readonly IOptions<AppSettings> _appSettings;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AuthController(IUserRepository repository, IMapper mapper, IOptions<AppSettings> appSettings)
+        public AuthController(IUserRepository repository, IMapper mapper,
+                              IOptions<AppSettings> appSettings,
+                              IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
             _mapper = mapper;
             _appSettings = appSettings;
+            _httpContextAccessor = httpContextAccessor;
         }
 
        
@@ -76,7 +81,6 @@ namespace SchoolManagement.API.Controllers
         }
 
         [HttpPost("Login")]
-
         public async Task<IActionResult> Login([FromBody]LoginModel model)
         {
             if(ModelState.IsValid)
@@ -96,6 +100,29 @@ namespace SchoolManagement.API.Controllers
             else
             {
                 return BadRequest("Email or Password are incorrect");
+            }
+        }
+
+        [Helpers.Authorize]
+        [HttpGet("GetUser")]
+        public async Task<ActionResult<UserDTO>> GetUser()
+        {
+            // Gets the UserId from the current Request's Authorization header Bearer Token
+            var userId = int.Parse(_httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+            // calling the UserRepository to get the user data
+            var user = await _repository.GetUserById(userId);
+
+            // case user does not exist
+            if (user == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var appUser = _mapper.Map<UserDTO>(user);
+
+                return appUser;
             }
         }
 
