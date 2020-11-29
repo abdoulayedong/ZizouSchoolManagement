@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace SchoolManagement.UI.Views
 {
@@ -26,8 +27,11 @@ namespace SchoolManagement.UI.Views
 
         private void Mouse_Down(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ButtonCloseMenu.Visibility = Visibility.Collapsed;
-            ButtonOpenMenu.Visibility = Visibility.Visible;
+            if(ButtonOpenMenu.Visibility == Visibility.Visible)
+            {
+                ButtonCloseMenu.Visibility = Visibility.Visible;
+                ButtonOpenMenu.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Hover_over(object sender, System.Windows.Input.MouseEventArgs e)
@@ -38,7 +42,7 @@ namespace SchoolManagement.UI.Views
                 tt_etudiants.Visibility = Visibility.Collapsed;
                 tt_classes.Visibility = Visibility.Collapsed;
                 tt_departments.Visibility = Visibility.Collapsed;
-                tt_signOut.Visibility = Visibility.Collapsed;
+                //tt_signOut.Visibility = Visibility.Collapsed;
             }
             else
             {
@@ -46,10 +50,34 @@ namespace SchoolManagement.UI.Views
                 tt_etudiants.Visibility = Visibility.Visible;
                 tt_classes.Visibility = Visibility.Visible;
                 tt_departments.Visibility = Visibility.Visible;
-                tt_signOut.Visibility = Visibility.Visible;
+                //tt_signOut.Visibility = Visibility.Visible;
             }
 
 
+        }
+
+        private void Changed_View(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            UserControl usc = null;
+            GridMain.Children.Clear();
+
+            switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
+            {
+                case "ItemHome":
+                    usc = new HomeView();
+                    GridMain.Children.Add(usc);
+                    break;
+                case "ItemStudent":
+                    break;
+                case "ItemClasses":
+                    break;
+                case "ItemDepartement":
+                    usc = new DepartmentView();
+                    GridMain.Children.Add(usc);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

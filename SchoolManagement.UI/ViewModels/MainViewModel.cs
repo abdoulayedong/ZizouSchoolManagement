@@ -68,11 +68,11 @@ namespace SchoolManagement.UI.ViewModels
             get { return true; }
         }
 
-        public async Task LogOut()
+        public void LogOut()
         {
             _loggedInUser.Clear();
             IsSideMenuVisible = IsMenuBarVisible = false;
-            await ActivateItemAsync(_simpleContainer.GetInstance<LoginViewModel>());
+            ActivateItemAsync(_simpleContainer.GetInstance<LoginViewModel>());
         }
         #endregion
         #region Public Prop
