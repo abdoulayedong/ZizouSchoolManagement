@@ -1,12 +1,15 @@
 ﻿using Caliburn.Micro;
 using SchoolManagement.UI.EventModel;
+using SchoolManagement.UI.Helpers;
 using SchoolManagement.UI.Library.API;
 using SchoolManagement.UI.Library.Models;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SchoolManagement.UI.ViewModels
 {
@@ -34,6 +37,11 @@ namespace SchoolManagement.UI.ViewModels
             _events = events;
 
             // Initiate the View 
+            GetLoginViewModel();
+        }
+
+        private void GetLoginViewModel()
+        {
             ActivateItemAsync(_simpleContainer.GetInstance<LoginViewModel>());
         }
 

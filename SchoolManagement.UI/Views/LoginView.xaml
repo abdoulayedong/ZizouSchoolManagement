@@ -32,7 +32,7 @@
 
         <Button x:Name="Close"
                 Style="{StaticResource MaterialDesignFlatButton}"
-                Foreground="White"
+                Foreground="#116199"
                 VerticalAlignment="Bottom"
                 Content="Exit"
                 HorizontalAlignment="Center"/>
@@ -98,7 +98,7 @@
                 Margin="0,65"
                 Content="SE CONNECTER"
                 x:Name="OnLogIn"/>
-        
+
 
         <Image Source="/Assets/School.png"
                Width="100"
@@ -113,3 +113,4 @@
                              Visibility="{Binding IsSpinnerVisible, Converter={StaticResource BooleanToVisibilityConverter},FallbackValue=Collapsed}"/>
     </Grid>
 </UserControl>
+
