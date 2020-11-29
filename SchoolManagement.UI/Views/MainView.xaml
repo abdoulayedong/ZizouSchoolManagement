@@ -3,13 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SchoolManagement.UI.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:fa="http://schemas.fontawesome.com/icons/"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="Zizou School Managament"
-        Foreground="White"
-        ResizeMode="CanResize"
+        ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         Topmost="True"
         WindowStartupLocation="CenterScreen" 
@@ -31,6 +29,7 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="70"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        
         <!--// Text font style //-->
         <Style x:Key="font_style"
                TargetType="TextBlock">
@@ -65,6 +64,43 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
         </Style>
 
+        <!--#region Custom PopUp Style-->
+        
+        <Style TargetType="TextBlock"
+               x:Key="PopUpTextBox">
+            <Setter Property="FontFamily" Value="Roboto"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin"
+                    Value="4"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource MaterialDesignToolForeground}"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Center"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+        </Style>
+
+        <Style TargetType="materialDesign:PackIcon"
+               x:Key="PopupIcons">
+            <Setter Property ="Height"
+                    Value="Auto"/>
+            <Setter Property="Width"
+                    Value="Auto"/>
+            <Setter Property="Foreground"
+                    Value="{StaticResource MaterialDesignToolForeground}"/>
+            <Setter Property="Padding"
+                    Value="0"/>
+            <Setter Property="Margin"
+                    Value="0 0 5 0"/>
+            <Setter Property="HorizontalAlignment"
+                    Value="Center"/>
+            <Setter Property="VerticalAlignment"
+                    Value="Center"/>
+        </Style>
+        
+        <!--#endRegion -->
+
     </Window.Resources>
     
     <Window.Triggers>
@@ -76,44 +112,98 @@
         </EventTrigger>
     </Window.Triggers>
 
-    <Grid Background="White">
+    <Grid Margin="0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
         <Grid Height="60"
+              Grid.Row="0"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
               VerticalAlignment="Top"
-              Background="#2E333A"
+              Background="#FF31577E"
               Visibility="{Binding IsMenuBarVisible, Converter={StaticResource BooleanToVisibilityConverter},FallbackValue=Collapsed}">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="1"
                                   ShadowDepth="1"
                                   Color="#FFACACAC"/>
             </Grid.Effect>
+            
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
+                
                 <TextBlock x:Name="UserName"
+                           Foreground="White"
                            VerticalAlignment="Center"
-                           FontSize="16"/>
+                           FontSize="16"
+                           Style="{StaticResource PopUpTextBox}"/>
+                
                 <materialDesign:PopupBox PlacementMode="BottomAndAlignRightEdges"
                                          StaysOpen="False"
+                                         Foreground="White"
                                          Margin="10">
-                    <StackPanel Width="150">
-                        <Button Content="Settings"/>
-                        <Button Content="Account"/>
-                        <Button Content="Help"/>
+                    <StackPanel Width="180">
+                        <Button>
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="CogOutline"
+                                                         Style="{StaticResource PopupIcons}"/>
+                                <TextBlock Text="Parametres" 
+                                           Style="{StaticResource PopUpTextBox}" />
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="LoadAccount">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="AccountCog"
+                                                         Style="{StaticResource PopupIcons}"/>
+                                <TextBlock Text="Account"
+                                           Style="{StaticResource PopUpTextBox}"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Button x:Name="LoadHelp">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="HelpCircleOutline"
+                                                         Style="{StaticResource PopupIcons}"/>
+                                <TextBlock Text="Aide"  
+                                           Style="{StaticResource PopUpTextBox}"/>
+                            </StackPanel>
+                        </Button>
                         <Separator/>
-                        <Button Content="Logout"
-                                x:Name="LogOut"/>
+
+                        <Button x:Name="LogOut"
+                                cal:Message.Attach="[Event Click] = [Action LogOut()]">
+
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon Kind="LogoutVariant"
+                                                         Style="{StaticResource PopupIcons}"/>
+                                <TextBlock Text="Se Déconnecter"  
+                                           Style="{StaticResource PopUpTextBox}"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </StackPanel>
             <TextBlock HorizontalAlignment="Center"
                        VerticalAlignment="Center"
+                       Foreground="White"
                        FontSize="22">School Management System</TextBlock>
         </Grid>
 
         <Grid x:Name="GridMenu"
+              Grid.Column="0"
+              Grid.Row="0"
+              Grid.RowSpan="2"
               Width="70"
               HorizontalAlignment="Left"
-              Background="#2E333A"
+              Background="#FF31577E"
               Visibility="{Binding IsSideMenuVisible, Converter={StaticResource BooleanToVisibilityConverter},FallbackValue=Collapsed}">
             <Grid.Effect>
                 <DropShadowEffect BlurRadius="2" ShadowDepth="1" Color="#FFAEAEAE"/>
@@ -130,11 +220,20 @@
                         </TransformGroup>
                     </Grid.RenderTransform>
 
+                    <TextBlock Text="M E N U"
+                               Foreground="White"
+                               FontSize="18"
+                               Background="Transparent"
+                               HorizontalAlignment="Right"
+                               Margin="50 0"
+                               VerticalAlignment="Center"
+                               Style="{StaticResource font_style}"/>
+
                     <Button x:Name="ButtonOpenMenu"
                             Height="60"
                             Width="60"
                             Margin="5"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                             Background="{x:Null}"
@@ -152,7 +251,7 @@
                             Height="60"
                             Width="60"
                             Margin="5"
-                            HorizontalAlignment="Right"
+                            HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
                             Background="{x:Null}"
@@ -289,13 +388,10 @@
 
         <!--Active Item-->
         <Grid x:Name="GridMain"
-              HorizontalAlignment="Right"
-              VerticalAlignment="Bottom"
-              Height="540"
-              Width="730" PreviewMouseLeftButtonDown="Mouse_Down">
+              Grid.Row="1"
+              Grid.Column="1"
+              PreviewMouseLeftButtonDown="Mouse_Down">
             <ContentControl x:Name="ActiveItem"/>
         </Grid>
-
-
     </Grid>
 </Window>
