@@ -6,16 +6,56 @@
         xmlns:local="clr-namespace:SchoolManagement.UI.Views"
         mc:Ignorable="d"
         Title="Zizou School Managament"
-        Height="500"
-        Width="350" 
-        ResizeMode="NoResize" 
+        ResizeMode="CanResize"
+        SizeToContent="WidthAndHeight"
+        Topmost="True"
         WindowStartupLocation="CenterScreen" 
         WindowStyle="None" 
         FontFamily="Segoe UI Emoji">
     
-    <Grid>
+    <Grid x:Name="MainGrid">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--// Backgroud Color-->
+
+        <Grid x:Name="Nav_Bar"
+              Grid.Column="0"
+              Grid.Row="0"
+              Grid.RowSpan="3">
+            <StackPanel x:Name="Toggle_StackPanel">
+                <!-- Toggle Button-->
+                <Grid Height="90">
+                    <ToggleButton x:Name="Toggle_Menu"
+                                  Grid.Column="0"
+                                  VerticalAlignment="Center"
+                                  HorizontalAlignment="Left"
+                                  Margin="18,-20,0,0"
+                                  Height="30"
+                                  Width="30"
+                                  BorderThickness="0">
+                        
+                    </ToggleButton>
+                    
+                </Grid>
+                
+            </StackPanel>
+            
+            
+        </Grid>        
         <!--#region Content-->
-        <ContentControl x:Name="ActiveItem"/>
+        <ContentControl Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="ActiveItem"/>
         <!--#endregion-->
     </Grid>
 </Window>
