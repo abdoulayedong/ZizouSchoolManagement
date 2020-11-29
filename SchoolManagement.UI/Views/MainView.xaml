@@ -50,8 +50,8 @@
         <Style TargetType="ToolTip" x:Key="tt_style">
             <Setter Property="Placement" Value="Right"/>
             <Setter Property="Height" Value="40"/>
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="Width" Value="120"/>
+            <Setter Property="Margin" Value="15,0,0,0"/>
             <Setter Property="Background" Value="#4A5668"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
@@ -265,7 +265,8 @@
 
                 <ListView x:Name="ListViewMenu"
                           Background="#2E333A"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          SelectionChanged="Changed_View">
 
                     <ListViewItem x:Name="ItemHome"
                                   Height="60"
@@ -313,6 +314,7 @@
                     </ListViewItem>
 
                     <ListViewItem Height="60"
+                                  x:Name="ItemClasses"
                                   MouseEnter="Hover_over">
                         
                         <StackPanel Orientation="Horizontal">
@@ -337,6 +339,7 @@
                     </ListViewItem>
 
                     <ListViewItem Height="60"
+                                  x:Name="ItemDepartement"
                                   MouseEnter="Hover_over">
                         <StackPanel Orientation="Horizontal">
 
@@ -359,7 +362,8 @@
                         </ListViewItem.ToolTip>
                     </ListViewItem>
 
-                    <ListViewItem Height="60"
+                    <!--<ListViewItem Height="60"
+                                  x:Name="SignOutItem"
                                   MouseEnter="Hover_over">
                         <StackPanel Orientation="Horizontal">
 
@@ -381,7 +385,7 @@
                                      Style="{StaticResource tt_style}"/>
 
                         </ListViewItem.ToolTip>
-                    </ListViewItem>
+                    </ListViewItem>-->
                 </ListView>
             </StackPanel>
         </Grid>

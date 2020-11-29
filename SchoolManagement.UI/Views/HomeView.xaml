@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SchoolManagement.UI.Views"
              mc:Ignorable="d"
              Foreground="White"
+             Background="#FFFF40"
              Height="540"
              Width="730">
     <Grid>
