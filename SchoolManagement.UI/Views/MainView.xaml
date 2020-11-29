@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SchoolManagement.UI.Views"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800">
+        Title="Zizou School Managament"
+        Height="500"
+        Width="350" 
+        ResizeMode="NoResize" 
+        WindowStartupLocation="CenterScreen" 
+        WindowStyle="None" 
+        FontFamily="Segoe UI Emoji">
+    
     <Grid>
-        
+        <!--#region Content-->
+        <ContentControl x:Name="ActiveItem"/>
+        <!--#endregion-->
     </Grid>
 </Window>

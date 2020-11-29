@@ -21,7 +21,7 @@ namespace SchoolManagement.UI.Library.API
         private void InitializeClient()
         {
             apiClient = new HttpClient();
-            apiClient.BaseAddress = new Uri("https://localhost:44304/api");
+            apiClient.BaseAddress = new Uri("https://localhost:44304");
             apiClient.DefaultRequestHeaders.Accept.Clear();
             apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
@@ -46,7 +46,7 @@ namespace SchoolManagement.UI.Library.API
             var contentData = new StringContent(stringData, System.Text.Encoding.UTF8, "application/json");
 
             // Sending the request using the HttpClient's set of default functions 
-            using (HttpResponseMessage response = await apiClient.PostAsync("/Auth/Login", contentData))
+            using (HttpResponseMessage response = await apiClient.PostAsync("/api/Auth/Login", contentData))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -72,7 +72,7 @@ namespace SchoolManagement.UI.Library.API
             apiClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             apiClient.DefaultRequestHeaders.Add("Authorization", $"Bearer { token }");
 
-            using (HttpResponseMessage response = await apiClient.GetAsync("/Auth/GetUser"))
+            using (HttpResponseMessage response = await apiClient.GetAsync("/api/Auth/GetUser"))
             {
                 if (response.IsSuccessStatusCode)
                 {

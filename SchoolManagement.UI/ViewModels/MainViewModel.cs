@@ -1,13 +1,16 @@
 ﻿using Caliburn.Micro;
+using SchoolManagement.UI.EventModel;
 using SchoolManagement.UI.Library.API;
 using SchoolManagement.UI.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SchoolManagement.UI.ViewModels
 {
-    public class MainViewModel : Conductor<object>
+    public class MainViewModel : Conductor<object>, IHandle<LogInEvent>
     {
         private readonly HomeViewModel _homeViewModel;
         private readonly SimpleContainer _simpleContainer;
@@ -29,6 +32,18 @@ namespace SchoolManagement.UI.ViewModels
             _windowManager = windowManager;
             _loggedInUser = loggedInUser;
             _events = events;
+
+            // Initiate the View 
+            ActivateItemAsync(_simpleContainer.GetInstance<LoginViewModel>());
         }
+
+        #region IHandle Implementation
+        public Task HandleAsync(LogInEvent logInEvent, CancellationToken cancellationToken)
+        {
+            ActivateItemAsync(_homeViewModel);
+            return Task.CompletedTask;
+        }
+
+        #endregion
     }
 }

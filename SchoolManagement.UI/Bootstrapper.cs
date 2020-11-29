@@ -1,12 +1,15 @@
 ﻿using Caliburn.Micro;
 using SchoolManagement.Data;
+using SchoolManagement.UI.Helpers;
 using SchoolManagement.UI.Library.API;
 using SchoolManagement.UI.Library.Models;
+using SchoolManagement.UI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace SchoolManagement.UI
 {
@@ -18,10 +21,10 @@ namespace SchoolManagement.UI
         {
             Initialize();
 
-            //ConventionManager.AddElementConvention<PasswordBox>(
-            //PasswordBoxHelper.BoundPasswordProperty,
-            //"Password",
-            //"PasswordChanged");
+            ConventionManager.AddElementConvention<PasswordBox>(
+            PasswordBoxHelper.BoundPasswordProperty,
+            "Password",
+            "PasswordChanged");
         }
 
         protected override void Configure()
