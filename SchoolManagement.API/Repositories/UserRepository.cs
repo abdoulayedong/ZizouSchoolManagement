@@ -60,18 +60,20 @@ namespace SchoolManagement.API.Repositories
         public async Task<User> Login(string email, string password)
         {
             var doesUserExists = await UserExists(email);
-
             if (doesUserExists == true)
             {
                 var existingUser = await _context.Users.FirstOrDefaultAsync(user => user.Email == email);
+
                 if (!VerifyPasswordHash(password, existingUser.PasswordHash, existingUser.PasswordSalt))
                     return null;
+
                 return existingUser;
             }
             else
             {
                 return null;
             }
+            
         }
 
         public async Task<User> GetUserById(int id)
@@ -87,13 +89,11 @@ namespace SchoolManagement.API.Repositories
         }
         public async Task<bool> UserExists(string email)
         {
-            if ((await _context.Users.AnyAsync(x => x.Email == email)))
+            if (await _context.Users.AnyAsync(x => x.Email == email))
                 return true;
 
             return false;
         }
-
-
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
