@@ -19,8 +19,10 @@ namespace SchoolManagement.Domain
         [StringLength(128)]
         [EmailAddress]
         public string Email { get; set; }
+
         public string PhoneNumber { get; set; }
-        public string  Gender { get; set; }
+
+        public Gender  Gender { get; set; }
 
         public string Address { get; set; }
         
@@ -30,7 +32,7 @@ namespace SchoolManagement.Domain
 
         public string MainPhotoUrl { get; set; }
 
-        public ICollection<StudentSubject> Classes { get; set; }
+        public ICollection<StudentCourse> Courses { get; set; }
 
 
     }

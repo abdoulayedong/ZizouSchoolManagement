@@ -9,21 +9,28 @@ namespace SchoolManagement.Domain
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
+
         [Required]
         [StringLength(50)]
         public string Code { get; set; }
 
         public int NumberOfStudents { get; set; }
+
         public int NumberOfCourses { get; set; }
+
         public int NumberOfProfessors { get; set; }
 
+        //1- One to many relationship with Departement
         public int DepartmentId { get; set; }
+
         public Department Department { get; set; }
 
-        public ICollection<ClassSubject> Subjects { get; set; }
+        // Many to many relationship with Courses
+        public ICollection<ClassCourse> Courses { get; set; }
 
     }
 }

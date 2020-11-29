@@ -4,13 +4,13 @@ using System.Text;
 
 namespace SchoolManagement.Domain
 {
-    public class StudentSubject
+    public class StudentCourse
     {
         public int StudentId { get; set; }
         public Student Student { get; set; }
 
-        public int SubjectId { get; set; }
-        public Subject Subject { get; set; }
+        public int CourseId { get; set; }
+        public Course Course { get; set; }
 
         public DateTime AbsenceDate { get; set; }
     }
