@@ -8,15 +8,15 @@ namespace SchoolManagement.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             #region ZizouPop Conncetion String
-            optionsBuilder.UseSqlServer(
-                ("Server = (localdb)\\MSSQLLocalDB; Database = SchoolManagementDB; Trusted_Connection = True;")
-                );
+            //optionsBuilder.UseSqlServer(
+            //    (@"Server = (localdb)\MSSQLLocalDB; Database = SchoolManagementDB; Trusted_Connection = True; ")
+            //    );
 
             #endregion
 
             #region Boshies Connection String
 
-            //optionsBuilder.UseSqlServer(( "Server = localhost\\SQLEXPRESS; Database = SchoolManagementDB ; Trusted_Connection = True; "));
+            optionsBuilder.UseSqlServer(( "Server = localhost\\SQLEXPRESS; Database = SchoolManagementDB ; Trusted_Connection = True; "));
 
             #endregion
         }
