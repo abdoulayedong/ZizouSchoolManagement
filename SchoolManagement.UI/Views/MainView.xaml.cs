@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Caliburn.Micro;
+using SchoolManagement.UI.ViewModels;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace SchoolManagement.UI.Views
@@ -8,9 +10,11 @@ namespace SchoolManagement.UI.Views
     /// </summary>
     public partial class MainView : Window
     {
+        private readonly SimpleContainer _container = new SimpleContainer();
         public MainView()
         {
             InitializeComponent();
+            
         }
 
         private void ButtonOpenMenu_Click(object sender, RoutedEventArgs e)
@@ -34,50 +38,55 @@ namespace SchoolManagement.UI.Views
             }
         }
 
-        private void Hover_over(object sender, System.Windows.Input.MouseEventArgs e)
-        {
-            if(ButtonOpenMenu.Visibility == Visibility.Collapsed)
-            {
-                tt_home.Visibility = Visibility.Collapsed;
-                tt_etudiants.Visibility = Visibility.Collapsed;
-                tt_classes.Visibility = Visibility.Collapsed;
-                tt_departments.Visibility = Visibility.Collapsed;
-                //tt_signOut.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                tt_home.Visibility = Visibility.Visible;
-                tt_etudiants.Visibility = Visibility.Visible;
-                tt_classes.Visibility = Visibility.Visible;
-                tt_departments.Visibility = Visibility.Visible;
-                //tt_signOut.Visibility = Visibility.Visible;
-            }
+        //private void Hover_over(object sender, System.Windows.Input.MouseEventArgs e)
+        //{
+        //    if(ButtonOpenMenu.Visibility == Visibility.Collapsed)
+        //    {
+        //        tt_home.Visibility = Visibility.Collapsed;
+        //        tt_etudiants.Visibility = Visibility.Collapsed;
+        //        tt_classes.Visibility = Visibility.Collapsed;
+        //        tt_departments.Visibility = Visibility.Collapsed;
+        //        //tt_signOut.Visibility = Visibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        tt_home.Visibility = Visibility.Visible;
+        //        tt_etudiants.Visibility = Visibility.Visible;
+        //        tt_classes.Visibility = Visibility.Visible;
+        //        tt_departments.Visibility = Visibility.Visible;
+        //        //tt_signOut.Visibility = Visibility.Visible;
+        //    }
 
 
         }
 
-        private void Changed_View(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-            UserControl usc = null;
-            GridMain.Children.Clear();
+        //private void Changed_View(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        //{
+        //    UserControl usc = null;
+        //    GridMain.Children.Clear();
 
-            switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
-            {
-                case "ItemHome":
-                    usc = new HomeView();
-                    GridMain.Children.Add(usc);
-                    break;
-                case "ItemStudent":
-                    break;
-                case "ItemClasses":
-                    break;
-                case "ItemDepartement":
-                    usc = new DepartmentView();
-                    GridMain.Children.Add(usc);
-                    break;
-                default:
-                    break;
-            }
-        }
+        //    switch (((ListViewItem)((ListView)sender).SelectedItem).Name)
+        //    {
+        //        case "ItemHome":
+        //            usc = new DashboardView();                    
+        //            GridMain.Children.Add(usc);
+        //            break;
+        //        case "ItemStudent":
+        //            usc = new StudentView();                    
+        //            GridMain.Children.Add(usc);
+        //            break;
+        //        case "ItemClasses":
+        //            usc = new ClassView();
+        //            GridMain.Children.Add(usc);
+        //            break;
+        //        case "ItemDepartement":
+        //            usc = new DepartmentView();
+        //            //usc.DataContext = _container.GetInstance<DepartmentViewModel>();
+        //            GridMain.Children.Add(usc);
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
     }
-}
+

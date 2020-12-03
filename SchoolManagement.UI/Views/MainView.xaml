@@ -7,11 +7,11 @@
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="Zizou School Managament"
-        
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         SizeToContent="WidthAndHeight"
         Topmost="True"
         WindowStartupLocation="CenterScreen" 
-        WindowStyle="None" 
+        WindowStyle="ToolWindow" 
         FontFamily="Segoe UI Emoji"
         d:DesignHeight="600"
         d:DesignWidth="800">
@@ -265,102 +265,37 @@
 
                 <ListView x:Name="ListViewMenu"
                           Background="#2E333A"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                          SelectionChanged="Changed_View">
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
 
-                    <ListViewItem x:Name="ItemHome"
-                                  Height="60"
-                                  MouseEnter="Hover_over">
-                        <StackPanel Orientation="Horizontal">
+                    <Button x:Name="GetDashbord" Background="Transparent" BorderThickness="0">
                             <materialDesign:PackIcon Kind="Home"
                                                      Foreground="#54959E"
-                                                     Width="35"
-                                                     Height="35"
-                                                     Margin="10 0"/>
-                            <TextBlock Text="Acceuil"
-                                       Margin="20 10"
-                                       Style="{StaticResource font_style}"/>
-                        </StackPanel>
-                        <ListViewItem.ToolTip>
-                            <ToolTip x:Name="tt_home"
-                                     Content="Acceuil"
-                                     Style="{StaticResource tt_style}"/>
-                        </ListViewItem.ToolTip>
+                                                     Width="25"
+                                                     Height="25"/>
+                    </Button>
 
-                    </ListViewItem>
-
-                    <ListViewItem x:Name="ItemStudent"
-                                  Height="60"
-                                  MouseEnter="Hover_over">
-
-                        <StackPanel Orientation="Horizontal">
+                    <Button x:Name="GetStudent" Background="Transparent" BorderThickness="0">
                             <materialDesign:PackIcon Kind="User"
                                                      Foreground="#FFFF40"
-                                                     Width="35"
-                                                     Height="35"
-                                                     Margin="10 0"/>
+                                                     Width="25"
+                                                     Height="25"/>
 
-                            <TextBlock Text="Etudiants"
-                                       Margin="20 10"
-                                       VerticalAlignment="Center"
-                                       Style="{StaticResource font_style}"/>
-                        </StackPanel>
-                        <ListViewItem.ToolTip>
+                    </Button>
 
-                            <ToolTip x:Name="tt_etudiants"
-                                     Content="Etudiants"
-                                     Style="{StaticResource tt_style}"/>
-                        </ListViewItem.ToolTip>
-                    </ListViewItem>
-
-                    <ListViewItem Height="60"
-                                  x:Name="ItemClasses"
-                                  MouseEnter="Hover_over">
-                        
-                        <StackPanel Orientation="Horizontal">
+                    <Button x:Name="GetClass" Background="Transparent" BorderThickness="0">
                             <materialDesign:PackIcon Kind="Pencil"
                                                      Foreground="#FF5B00"
-                                                     Width="35"
-                                                     Height="35"
-                                                     Margin="8,0,0,0"/>
+                                                     Width="25"
+                                                     Height="25"/>
+                    </Button>
 
-                            <TextBlock Text="Classes"
-                                       Margin="25,0,0,0"
-                                       VerticalAlignment="Center"
-                                       Style="{StaticResource font_style}"/>
-                        </StackPanel>
-
-                        <ListViewItem.ToolTip>
-                            <ToolTip x:Name="tt_classes"
-                                     Content="Classes"
-                                     Style="{StaticResource tt_style}"/>
-
-                        </ListViewItem.ToolTip>
-                    </ListViewItem>
-
-                    <ListViewItem Height="60"
-                                  x:Name="ItemDepartement"
-                                  MouseEnter="Hover_over">
-                        <StackPanel Orientation="Horizontal">
-
-                            <materialDesign:PackIcon Kind="HomeAccount"
+                    <Button x:Name="GetDepartment" Background="Transparent" BorderThickness="0">
+                       <materialDesign:PackIcon Kind="HomeAccount"
                                                      Foreground="#E0EC1D"
-                                                     Width="35"
-                                                     Height="35"
-                                                     Margin="8,0,0,0"/>
-
-                            <TextBlock Text="Départements"
-                                       Margin="25,0,0,0"
-                                       Style="{StaticResource font_style}"/>
-                        </StackPanel>
-                        <ListViewItem.ToolTip>
-
-                            <ToolTip x:Name="tt_departments"
-                                     Content="Départements"
-                                     Style="{StaticResource tt_style}"/>
-
-                        </ListViewItem.ToolTip>
-                    </ListViewItem>
+                                                     Width="25"
+                                                     Height="25"/>
+                        
+                    </Button>
 
                     <!--<ListViewItem Height="60"
                                   x:Name="SignOutItem"

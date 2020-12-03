@@ -1,5 +1,4 @@
-﻿using Caliburn.Micro;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -15,20 +14,13 @@ using System.Windows.Shapes;
 namespace SchoolManagement.UI.Views
 {
     /// <summary>
-    /// Logique d'interaction pour DepartmentView.xaml
+    /// Logique d'interaction pour AddDepartmentView.xaml
     /// </summary>
-    public partial class DepartmentView : UserControl
+    public partial class AddDepartmentView : UserControl
     {
-        public DepartmentView()
+        public AddDepartmentView()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            SimpleContainer container = new SimpleContainer();
-            EventAggregator eventAggregator = new EventAggregator();
-            WindowManager manager = new WindowManager();
         }
     }
 }

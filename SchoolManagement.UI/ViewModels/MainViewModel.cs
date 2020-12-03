@@ -60,6 +60,30 @@ namespace SchoolManagement.UI.ViewModels
             IsMenuBarVisible = true;
             return Task.CompletedTask;
         }
+
+        public Task GetStudent()
+        {
+            ActivateItemAsync(_simpleContainer.GetInstance<StudentViewModel>());
+            IsSideMenuVisible = true;
+            IsMenuBarVisible = true;
+            return Task.CompletedTask;
+        }
+
+        public Task GetClass()
+        {
+            ActivateItemAsync(_simpleContainer.GetInstance<ClassViewModel>());
+            IsSideMenuVisible = true;
+            IsMenuBarVisible = true;
+            return Task.CompletedTask;
+        }
+
+        public Task GetDepartment()
+        {
+            ActivateItemAsync(_simpleContainer.GetInstance<DepartmentViewModel>());
+            IsSideMenuVisible = true;
+            IsMenuBarVisible = true;
+            return Task.CompletedTask;
+        }
         #endregion
 
         #region LogOut Command
