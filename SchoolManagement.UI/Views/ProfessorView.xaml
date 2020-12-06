@@ -1,12 +1,10 @@
-﻿<UserControl x:Class="SchoolManagement.UI.Views.DepartmentView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="SchoolManagement.UI.Views.ProfessorView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:cal="http://www.caliburnproject.org"
              Height="540"
-             Width="730"
-             xmlns:context="clr-namespace:SchoolManagement.UI.ViewModels"
-             >
+             Width="730">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -40,7 +38,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="DEPARTMENT" 
+            <TextBlock Text="PROFESSOR" 
                        FontSize="18"
                        FontWeight="Bold"
                        Grid.Column="1" Grid.Row="1"/>
@@ -59,16 +57,16 @@
                     materialDesign:ButtonAssist.CornerRadius="3"
                     cal:Message.Attach="[Event Click] = [Action AddDepartment]">
                 <Button.Content>
-                    <StackPanel Orientation="Horizontal">                        
-                    <materialDesign:PackIcon Margin="-5 0 8 0" 
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Margin="-5 0 8 0" 
                                              Width="50"
                                              Height="50"                                                 
                                              Kind="Plus"/>
                         <TextBlock FontSize="15"
                                    VerticalAlignment="Center"
-                                   Text="Add department"/>
-                      
-                    </StackPanel>           
+                                   Text="Add professor"/>
+
+                    </StackPanel>
                 </Button.Content>
             </Button>
 
@@ -84,12 +82,12 @@
                                              Width="50"
                                              Height="50"                                                 
                                              Kind="Update"/>
-                        
-                            <TextBlock FontSize="15"
+
+                        <TextBlock FontSize="15"
                                        Margin="0 0 0 0"
                                        VerticalAlignment="Center"
-                                       Text="Update department"/>
-                  
+                                       Text="Update professor"/>
+
                     </StackPanel>
                 </Button.Content>
             </Button>
@@ -105,23 +103,23 @@
                                              Width="50"
                                              Height="50"                                                 
                                              Kind="Delete"/>
-                      
-                            <TextBlock FontSize="15"                                       
+
+                        <TextBlock FontSize="15"                                       
                                        VerticalAlignment="Center"
-                                       Text="Delete department"/>
-                        
+                                       Text="Delete professor"/>
+
                     </StackPanel>
                 </Button.Content>
             </Button>
 
-            <DataGrid ItemsSource="{Binding Departments}"
+            <DataGrid ItemsSource="{Binding Professors}"
                       Grid.Row="7"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="9"
+                      Grid.Column="1"
+                      Grid.ColumnSpan="5"
                       BorderThickness="0"
                       Foreground="Black"                      
                       AutoGenerateColumns="False"
-                      SelectedItem="{Binding Department}"
+                      SelectedItem="{Binding Professor}"
                       SelectionMode="Single"
                       CanUserReorderColumns="False" CanUserResizeColumns="False" 
                       CanUserResizeRows="True" CanUserSortColumns="True"
@@ -131,17 +129,21 @@
                       materialDesign:DataGridAssist.ColumnHeaderPadding="5"                              
                       HeadersVisibility="All">
                 <DataGrid.Columns>
-                    <materialDesign:DataGridTextColumn Width="50" Header="N°"
+                    <materialDesign:DataGridTextColumn Header="N°"
                                                         Binding="{Binding Id}" Foreground="Black"  />
-                    <materialDesign:DataGridTextColumn Width="100" Header="Code"
-                                                       Binding="{Binding Code}" Foreground="Black" />
-                    <materialDesign:DataGridTextColumn Width="200"  Header="DepartmentName"
-                                                       Binding="{Binding Name}" Foreground="Black"  />
-                    <materialDesign:DataGridTextColumn Width="300"  Header="HeadDepartment"
-                                                       Binding="{Binding HeadDeparment}" Foreground="Black"  />
+                    <materialDesign:DataGridTextColumn Header="FirstName"
+                                                       Binding="{Binding FirstName}" Foreground="Black" />
+                    <materialDesign:DataGridTextColumn Header="LastName"
+                                                       Binding="{Binding LastName}" Foreground="Black"  />
+                    <materialDesign:DataGridTextColumn Header="Diplome"
+                                                       Binding="{Binding Diplome}" Foreground="Black"  />
+                    <materialDesign:DataGridTextColumn Header="Hiring Date"
+                                                       Binding="{Binding HiringDate, StringFormat=dd/MM/yyyy}" Foreground="Black"/>
+                    <materialDesign:DataGridTextColumn Header="CIN"
+                                                       Binding="{Binding Cin}" Foreground="Black"/>
                 </DataGrid.Columns>
             </DataGrid>
 
-        </Grid>        
+        </Grid>
     </Grid>
 </UserControl>

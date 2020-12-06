@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace SchoolManagement.UI.ViewModels
 {
-    public class MainViewModel : Conductor<object>, IHandle<LogInEvent>
+    public class MainViewModel : Conductor<object>, IHandle<LogInEvent>, IHandle<ViewType>
     {
-        private readonly HomeViewModel _homeViewModel;
+        private readonly DashboardViewModel _dashboardViewModel;
         private readonly SimpleContainer _simpleContainer;
         private readonly IAPIHelper _apiHelper;
         private readonly IWindowManager _windowManager;
@@ -19,14 +19,14 @@ namespace SchoolManagement.UI.ViewModels
         private bool _isSideMenuVisible;
         private bool _isMenuBarVisible;
 
-        public MainViewModel(HomeViewModel homeViewModel,
+        public MainViewModel(DashboardViewModel dashboardViewModel,
                              SimpleContainer simpleContainer,
                              IAPIHelper apiHelper,
                              IWindowManager windowManager,
                              ILoggedInUser loggedInUser,
                              IEventAggregator events)
         {
-            _homeViewModel = homeViewModel;
+            _dashboardViewModel = dashboardViewModel;
             _simpleContainer = simpleContainer;
             _apiHelper = apiHelper;
             _windowManager = windowManager;
@@ -45,9 +45,23 @@ namespace SchoolManagement.UI.ViewModels
         }
 
         #region IHandle Implementation
+        public Task HandleAsync(ViewType message, CancellationToken cancellationToken)
+        {
+            switch (message)
+            {
+                case ViewType.AddDepartment:
+                    ActivateItemAsync(_simpleContainer.GetInstance<AddDepartmentViewModel>());
+                    break;
+                case ViewType.AddProfessor:
+                    ActivateItemAsync(_simpleContainer.GetInstance<AddProfessorViewModel>());
+                    break;
+            };
+            return Task.CompletedTask;
+        }
+
         public Task HandleAsync(LogInEvent logInEvent, CancellationToken cancellationToken)
         {
-            ActivateItemAsync(_homeViewModel);
+            ActivateItemAsync(_dashboardViewModel);
             IsSideMenuVisible = true;
             IsMenuBarVisible = true;
             return Task.CompletedTask;
@@ -84,6 +98,14 @@ namespace SchoolManagement.UI.ViewModels
             IsMenuBarVisible = true;
             return Task.CompletedTask;
         }
+
+        public Task GetCourse()
+        {
+            ActivateItemAsync(_simpleContainer.GetInstance<CourseViewModel>());
+            IsSideMenuVisible = true;
+            IsMenuBarVisible = true;
+            return Task.CompletedTask;
+        }
         #endregion
 
         #region LogOut Command
@@ -97,7 +119,7 @@ namespace SchoolManagement.UI.ViewModels
             _loggedInUser.Clear();
             IsSideMenuVisible = IsMenuBarVisible = false;
             ActivateItemAsync(_simpleContainer.GetInstance<LoginViewModel>());
-        }
+        } 
         #endregion
         #region Public Prop
 
@@ -120,9 +142,12 @@ namespace SchoolManagement.UI.ViewModels
                 NotifyOfPropertyChange(() => IsMenuBarVisible);
             }
         }
-
-
-
         #endregion
+    }
+
+    public enum ViewType
+    {
+        AddDepartment,
+        AddProfessor
     }
 }

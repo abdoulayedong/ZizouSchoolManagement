@@ -43,7 +43,8 @@ namespace SchoolManagement.UI
                 .PerRequest<IStudentRepository, StudentRepository>()
                 .PerRequest<IClassRepository, ClassRepository>()
                 .PerRequest<ICourseRepository, CourseRepository>()
-                .PerRequest<IDepartmentRepository, DepartmentRepository>();
+                .PerRequest<IDepartmentRepository, DepartmentRepository>()
+                .PerRequest<IProfessorRepository, ProfessorRepository>();
 
             GetType().Assembly.GetTypes()
                .Where(type => type.IsClass)

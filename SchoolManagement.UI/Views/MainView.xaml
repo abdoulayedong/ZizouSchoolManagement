@@ -282,6 +282,12 @@
 
                     </Button>
 
+                    <Button x:Name="GetCourse" Background="Transparent" BorderThickness="0">
+                        <materialDesign:PackIcon Kind="Clipboard"
+                                                     Foreground="Coral"
+                                                     Width="25"
+                                                     Height="25"/>
+                    </Button> 
                     <Button x:Name="GetClass" Background="Transparent" BorderThickness="0">
                             <materialDesign:PackIcon Kind="Pencil"
                                                      Foreground="#FF5B00"

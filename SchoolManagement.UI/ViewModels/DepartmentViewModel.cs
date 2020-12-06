@@ -9,30 +9,14 @@ namespace SchoolManagement.UI.ViewModels
 {
     public class DepartmentViewModel : Screen, IHandle<Department>
     {
-        //private WindowManager manager;
-        //private SimpleContainer container;
-        //private EventAggregator aggregator;
-        //private SchoolManagmentDBContext context;
-        //private DepartmentRepository DepartmentRepository;
-        //public DepartmentViewModel()
-        //{
-        //    manager = new WindowManager();
-        //    container = new SimpleContainer();
-        //    aggregator = new EventAggregator();
-        //    context = new SchoolManagmentDBContext();
-        //    DepartmentRepository = new DepartmentRepository(context);
-        //    var dep = DepartmentRepository.GetDepartments();
-        //    Departments.AddRange(dep);
-        //}
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManager _manager;
         private readonly SimpleContainer _container;
-
         private Department department;
         private BindableCollection<Department> departments = new BindableCollection<Department>();
         public DepartmentViewModel(IDepartmentRepository departmentRepository, IEventAggregator eventAggregator,
-            IWindowManager manager, SimpleContainer container)
+                                   IWindowManager manager, SimpleContainer container)
         {
             _departmentRepository = departmentRepository;
             _eventAggregator = eventAggregator;
@@ -50,7 +34,7 @@ namespace SchoolManagement.UI.ViewModels
 
         public async Task AddDepartment()
         {
-            await _manager.ShowDialogAsync(_container.GetInstance<AddDepartmentViewModel>());
+            await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.AddDepartment);
         }
 
         public Task HandleAsync(Department message, CancellationToken cancellationToken)

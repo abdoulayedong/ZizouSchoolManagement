@@ -29,7 +29,8 @@ namespace SchoolManagement.Data.Repositories
 
         public List<Class> GetClasses()
         {
-            return _context.Classes.ToList();
+            //return _context.Classes.ToList();
+            return new List<Class>();
         }
 
         public async Task<Class> UpdateClass(Class @class)

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SchoolManagement.Domain
 {
-    public class User 
+    public partial class User 
     {
         [Key]
         public int Id { get; set; }
@@ -23,6 +23,7 @@ namespace SchoolManagement.Domain
         public byte[] PasswordHash { get; set; }
 
         public byte[] PasswordSalt { get; set; }
+        public string MainPhotoUrl { get; set; }
 
     }
     
