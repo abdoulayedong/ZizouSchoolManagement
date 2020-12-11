@@ -265,7 +265,8 @@
 
                 <ListView x:Name="ListViewMenu"
                           Background="#2E333A"
-                          ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          BorderThickness="0">
 
                     <Button x:Name="GetDashbord" Background="Transparent" BorderThickness="0">
                             <materialDesign:PackIcon Kind="Home"
@@ -283,8 +284,8 @@
                     </Button>
 
                     <Button x:Name="GetCourse" Background="Transparent" BorderThickness="0">
-                        <materialDesign:PackIcon Kind="Clipboard"
-                                                     Foreground="Coral"
+                        <materialDesign:PackIcon Kind="Library"
+                                                     Foreground="#E0EC1D"
                                                      Width="25"
                                                      Height="25"/>
                     </Button> 
@@ -297,12 +298,19 @@
 
                     <Button x:Name="GetDepartment" Background="Transparent" BorderThickness="0">
                        <materialDesign:PackIcon Kind="HomeAccount"
-                                                     Foreground="#E0EC1D"
+                                                     Foreground="DodgerBlue"
                                                      Width="25"
                                                      Height="25"/>
                         
                     </Button>
 
+                    <Button x:Name="GetProfessor" Background="Transparent" BorderThickness="0">
+                        <materialDesign:PackIcon Kind="GoogleStreetView"
+                                                     Foreground="LightGreen"
+                                                     Width="25"
+                                                     Height="25"/>
+
+                    </Button>
                     <!--<ListViewItem Height="60"
                                   x:Name="SignOutItem"
                                   MouseEnter="Hover_over">

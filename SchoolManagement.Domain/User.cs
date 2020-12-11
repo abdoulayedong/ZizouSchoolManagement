@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SchoolManagement.Domain
 {
-    public partial class User 
+    public abstract class User 
     {
         [Key]
         public int Id { get; set; }

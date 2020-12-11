@@ -16,7 +16,9 @@ namespace SchoolManagement.Domain
         public string Cin { get; set; }
         [Required]
         public UniversityDiploma Diplome { get; set; }
-        public Department Department { get; set; }
+        public int DepartmentId { get; set; }
+        [Required]
+        public bool IsHead { get; set; }
     }
 
 }

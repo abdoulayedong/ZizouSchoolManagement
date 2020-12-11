@@ -53,7 +53,7 @@ namespace SchoolManagement.API.Controllers
                 if (await _repository.UserExists(model.Email))
                     return BadRequest("Email already exists");
 
-                var userToAdd = new User()
+                var userToAdd = new Student()
                 {
                     FirstName = model.FirstName,
                     LastName = model.LastName,

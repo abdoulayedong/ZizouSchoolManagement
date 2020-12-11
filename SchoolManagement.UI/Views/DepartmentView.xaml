@@ -138,7 +138,7 @@
                     <materialDesign:DataGridTextColumn Width="200"  Header="DepartmentName"
                                                        Binding="{Binding Name}" Foreground="Black"  />
                     <materialDesign:DataGridTextColumn Width="300"  Header="HeadDepartment"
-                                                       Binding="{Binding HeadDeparment}" Foreground="Black"  />
+                                                       Binding="{Binding Path=HeadDeparment.LastName}" Foreground="Black"  />
                 </DataGrid.Columns>
             </DataGrid>
 

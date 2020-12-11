@@ -8,14 +8,17 @@ namespace SchoolManagement.Data.Repositories
     public class DepartmentRepository : IDepartmentRepository
     {
         private readonly SchoolManagmentDBContext _context;
+        private readonly IProfessorRepository _professorRepository;
 
-        public DepartmentRepository(SchoolManagmentDBContext context)
+        public DepartmentRepository(SchoolManagmentDBContext context, IProfessorRepository professorRepository)
         {
             _context = context;
+            _professorRepository = professorRepository;
         }
 
         public async Task<Department> AddDepartment(Department department)
         {
+            await _professorRepository.UpdateProfessor(department.HeadDeparment);
             await _context.Departments.AddAsync(department);
             await _context.SaveChangesAsync();
             return department;

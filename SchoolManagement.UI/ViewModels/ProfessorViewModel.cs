@@ -30,13 +30,19 @@ namespace SchoolManagement.UI.ViewModels
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
             var professor = _professorRepository.GetProfessors();
-            professor.AddRange(professor);
+            Professors.AddRange(professor);
             return base.OnInitializeAsync(cancellationToken);
         }
 
         public async Task AddProfessor()
         {
-            await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.AddDepartment);
+            await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.AddProfessor);
+        }
+
+        public async Task UpdateProfessor(Professor professor)
+        {
+            await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.UpdateProfessor);
+            await _eventAggregator.PublishOnCurrentThreadAsync(professor);
         }
 
         public Professor Professor

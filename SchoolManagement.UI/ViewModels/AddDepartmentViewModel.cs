@@ -19,7 +19,26 @@ namespace SchoolManagement.UI.ViewModels
         public string Name
         {
             get { return _name; }
-            set { _name = value; NotifyOfPropertyChange("Name"); }
+            set 
+            {
+                _name = value; 
+                var space = value.Split(" ");
+                if(value.Length > 3 && space.Length < 2)
+                {
+                    Code = value.Substring(0, 5).ToUpper();
+                }
+                if (space.Length >= 2)
+                {
+                    Code = new string("");
+                    for(int i = 0; i < space.Length; i++)
+                    {
+                        Code += space[i].Substring(0, 1);
+                    }
+                    NotifyOfPropertyChange(() => Code);
+                }
+                NotifyOfPropertyChange(() => Name); 
+            
+            }
         }
 
         private string _code;
@@ -27,30 +46,29 @@ namespace SchoolManagement.UI.ViewModels
         public string Code
         {
             get { return _code; }
-            set { _code = value; NotifyOfPropertyChange("Code"); }
+            set { _code = value; NotifyOfPropertyChange(() => Code); }
         }
 
-        private List<Professor> _professors;
-
-        public List<Professor> Professors
+        private BindableCollection<Professor> _professors = new BindableCollection<Professor>(); 
+        public BindableCollection<Professor> Professors
         {
             get { return _professors; }
             set { _professors = value; NotifyOfPropertyChange("Professors"); }
         }
-
-        public Professor Professor { get; set; }
+        public Department Department { get; set; } = new Department();
+        public Professor Professor { get; set; } = new Professor();
 
         private readonly IDepartmentRepository _departmentRepository;
+        private readonly IProfessorRepository _professorRepository;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManager _manager;
         private readonly SimpleContainer _container;
-        private Department  department;
-        private BindableCollection<Department> departments = new BindableCollection<Department>();
         #endregion
-        public AddDepartmentViewModel(IDepartmentRepository departmentRepository, IEventAggregator eventAggregator,
-                                   IWindowManager manager, SimpleContainer container)
+        public AddDepartmentViewModel(IDepartmentRepository departmentRepository, IProfessorRepository professorRepository, 
+            IEventAggregator eventAggregator, IWindowManager manager, SimpleContainer container)
         {
             _departmentRepository = departmentRepository;
+            _professorRepository = professorRepository;
             _eventAggregator = eventAggregator;
             _manager = manager;
             _container = container;
@@ -60,13 +78,26 @@ namespace SchoolManagement.UI.ViewModels
         #region Override Methode Caliburn
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            departments.AddRange(_departmentRepository.GetDepartments());
+            Professors.AddRange(_professorRepository.GetProfessors());
             return Task.CompletedTask;
         }
         #endregion
-        public async Task OnClose()
+        #region Method
+        public async Task OnSaveDepartment()
         {
-            await TryCloseAsync();
+            Department.Name = Name;
+            Department.Code = Code;
+            Department.HeadDeparment = Professor;
+            Department.HeadDeparment.IsHead = true;
+            //HeadDepartment.IsHead = true;            
+            await _departmentRepository.AddDepartment(Department);
+            await OnCancel();
         }
-    } 
+
+        public async Task OnCancel()
+        {
+            await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.Department);
+        }
+        #endregion
+    }
 }

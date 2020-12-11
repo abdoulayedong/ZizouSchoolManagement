@@ -78,25 +78,31 @@
                            FontWeight="Bold"/>
 
                 <TextBox Grid.Row="1"
+                         Text="{Binding Name}"
                          Grid.Column="3"
                          BorderBrush="Black"
                          BorderThickness="0.5"/>
 
                 <TextBox Grid.Row="3"
                          Grid.Column="3"
+                         Text="{Binding Code}"
                          BorderBrush="Black"
                          BorderThickness="0.5"/>
 
                 <ComboBox Grid.Row="5"
                           Grid.Column="3"
                           BorderBrush="Black"
+                          ItemsSource="{Binding Professors}"
+                          DisplayMemberPath="LastName"
+                          SelectedValue="{Binding Professor}"
                           BorderThickness="0.5"/>
 
                 <Button Grid.Column="1"
                         Grid.Row="7"
                         Width="100"
                         HorizontalAlignment="Left"
-                        materialDesign:ButtonAssist.CornerRadius="5">
+                        materialDesign:ButtonAssist.CornerRadius="5"
+                        cal:Message.Attach="[Event Click] = [Action OnSaveDepartment]">
                         <Button.Content>
                             <TextBlock Text="Save"/>
                         </Button.Content>
@@ -105,7 +111,8 @@
                 <Button Grid.Column="3"
                         Width="100"
                         HorizontalAlignment="Right"
-                        Grid.Row="7" materialDesign:ButtonAssist.CornerRadius="5">
+                        Grid.Row="7" materialDesign:ButtonAssist.CornerRadius="5"
+                        cal:Message.Attach="[Event Click] = [Action OnCancel]">
                         <Button.Content>
                             <TextBlock Text="Cancel" VerticalAlignment="Center"/>
                         </Button.Content>   

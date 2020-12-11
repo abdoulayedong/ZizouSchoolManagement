@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Caliburn.Micro;
 
 namespace SchoolManagement.UI.ViewModels
 {
-    public class CourseViewModel
+    public class CourseViewModel : Screen
     {
     }
 }

@@ -55,7 +55,7 @@
                     Grid.Row="5"
                     HorizontalContentAlignment="Left"
                     materialDesign:ButtonAssist.CornerRadius="3"
-                    cal:Message.Attach="[Event Click] = [Action AddDepartment]">
+                    cal:Message.Attach="[Event Click] = [Action AddProfessor]">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Margin="-5 0 8 0" 

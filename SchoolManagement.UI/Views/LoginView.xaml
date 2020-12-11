@@ -81,7 +81,7 @@
                          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                          FontFamily="Champagne &amp; Limousines"
                          FontSize="18"/>
-
+                
                 <PasswordBox Margin="0,10"
                              x:Name="Password"
                              materialDesign:HintAssist.Hint="Mot de Passe"

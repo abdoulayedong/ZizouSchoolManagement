@@ -20,13 +20,11 @@ namespace SchoolManagement.Data
 
             #endregion
         }
-        public DbSet<User> Users { get; set; }
         public DbSet<Class> Classes { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<Professor> Professors { get; set; }
-        public DbSet<HeadDepartment> HeadDepartments { get; set; }
         public DbSet<ClassCourse> ClassCourses { get; set; }
         public DbSet<Professor_Class> ProfessorClasses { get; set; }
 
@@ -36,6 +34,11 @@ namespace SchoolManagement.Data
         {
            
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Department>()
+                .HasMany(d => d.Professors).WithOne().HasForeignKey(cle => cle.DepartmentId);
+   
+            modelBuilder.Entity<Student>().ToTable("Students");
+            modelBuilder.Entity<Professor>().ToTable("Professors").HasKey(x => x.Id);
             modelBuilder.Entity<StudentCourse>().ToTable("Absences");
             modelBuilder.Entity<ClassCourse>().HasKey(cc => new { cc.ClassId, cc.CourseId });
         }

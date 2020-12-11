@@ -15,7 +15,7 @@ namespace SchoolManagement.Domain
         [Required]
         [StringLength(50)]
         public string Code { get; set; }
-        public HeadDepartment HeadDeparment { get; set; }
+        public Professor HeadDeparment { get; set; }
         public ICollection<Class> Classes { get; set; }
         public ICollection<Professor> Professors { get; set; }
 

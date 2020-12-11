@@ -36,14 +36,19 @@ namespace SchoolManagement.Data.Repositories
         public async Task<Professor> UpdateProfessor(Professor professor)
         {
             var prof = await _context.Professors.FindAsync(professor.Id);
-            prof.Department = professor.Department;
+            prof.DepartmentId = professor.DepartmentId;
             prof.Cin = professor.Cin;
             prof.Diplome = professor.Diplome;
             prof.Email = professor.Email;
             prof.HiringDate = professor.HiringDate;
             prof.FirstName = professor.FirstName;
             prof.LastName = professor.LastName;
+            prof.IsHead = professor.IsHead;
+            prof.PasswordHash = professor.PasswordHash;
+            prof.PasswordSalt = professor.PasswordSalt;
+
             prof.MainPhotoUrl = professor.MainPhotoUrl;
+            
             await _context.SaveChangesAsync();
             return prof;
         }

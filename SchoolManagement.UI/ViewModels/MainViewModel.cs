@@ -55,6 +55,27 @@ namespace SchoolManagement.UI.ViewModels
                 case ViewType.AddProfessor:
                     ActivateItemAsync(_simpleContainer.GetInstance<AddProfessorViewModel>());
                     break;
+                case ViewType.Department:
+                    ActivateItemAsync(_simpleContainer.GetInstance<DepartmentViewModel>());
+                    break;
+                case ViewType.Professor:
+                    ActivateItemAsync(_simpleContainer.GetInstance<ProfessorViewModel>());
+                    break;
+                case ViewType.Course:
+                    ActivateItemAsync(_simpleContainer.GetInstance<CourseViewModel>());
+                    break;
+                case ViewType.AddCourse:
+                    break;
+                case ViewType.Student:
+                    ActivateItemAsync(_simpleContainer.GetInstance<StudentViewModel>());
+                    break;
+                case ViewType.AddStudent:
+                    break;
+                case ViewType.Class:
+                    ActivateItemAsync(_simpleContainer.GetInstance<ClassViewModel>());
+                    break;
+                case ViewType.AddClass:
+                    break;
             };
             return Task.CompletedTask;
         }
@@ -106,6 +127,14 @@ namespace SchoolManagement.UI.ViewModels
             IsMenuBarVisible = true;
             return Task.CompletedTask;
         }
+
+        public Task GetProfessor()
+        {
+            ActivateItemAsync(_simpleContainer.GetInstance<ProfessorViewModel>());
+            IsSideMenuVisible = true;
+            IsMenuBarVisible = true;
+            return Task.CompletedTask;
+        }
         #endregion
 
         #region LogOut Command
@@ -143,11 +172,5 @@ namespace SchoolManagement.UI.ViewModels
             }
         }
         #endregion
-    }
-
-    public enum ViewType
-    {
-        AddDepartment,
-        AddProfessor
     }
 }
