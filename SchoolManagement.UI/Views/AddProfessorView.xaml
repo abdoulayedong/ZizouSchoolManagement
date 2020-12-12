@@ -10,16 +10,12 @@
     <UserControl.Resources>
         <Style TargetType="StackPanel">
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0 0 20 0"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Width" Value="200"/>
         </Style>
         <Style TargetType="ComboBox">
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Width" Value="100"/>
-            <Setter Property="Height" Value="20"/>
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -49,8 +45,10 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="5"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="20"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
 
             <TextBlock Text="ADD PROFESSOR" 
@@ -69,104 +67,145 @@
                        Grid.Column="0" 
                        Grid.ColumnSpan="7"/>
 
-            <Grid  Grid.Row="4" Grid.Column="0"
+            <Grid Grid.Row="5" Grid.Column="0"
                   Grid.ColumnSpan="7">
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="5"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="FirstName" FontSize="16" 
-                               FontWeight="Bold" Margin="0,0,0,40" Grid.RowSpan="2" />
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="FirstName" 
+                               Grid.Column="1"
+                               Grid.Row="1"
+                               FontSize="16" 
+                               FontWeight="Bold" />
                     
                     <TextBox x:Name="FirstName"
+                             Grid.Column="3"
+                             Grid.Row="1" 
                              BorderBrush="Black"
-                             BorderThickness="0.5" Grid.ColumnSpan="2" Margin="0,0,0,40" Grid.RowSpan="2"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="LastName" FontSize="16"
-                               FontWeight="Bold" Margin="0,0,0,40" Grid.RowSpan="2"/>
+                             BorderThickness="0.5"/>
+                   
+                    <TextBlock Text="LastName"
+                               Grid.Column="1"
+                               Grid.Row="3"
+                               FontSize="16"
+                               FontWeight="Bold"/>
+                    
                     <TextBox x:Name="LastName"
-                         Grid.Row="3"
                          Grid.Column="3"
+                         Grid.Row="3"
                          BorderBrush="Black"
-                         BorderThickness="0.5" Grid.ColumnSpan="2" Margin="0,0,0,40" Grid.RowSpan="2"/>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Email" FontSize="16"
-                               FontWeight="Bold" Margin="0,0,0,40" Grid.RowSpan="2"/>
+                         BorderThickness="0.5"/>
+             
+                    <TextBlock Text="Email"
+                               FontSize="16"
+                               Grid.Column="1"
+                               Grid.Row="5"
+                               FontWeight="Bold"/>
 
                     <TextBox x:Name="Email"
+                             Grid.Column="3"
                              Grid.Row="5"
-                             Grid.Column="3"
                              BorderBrush="Black"
-                             BorderThickness="0.5" Grid.ColumnSpan="2" Margin="0,0,0,40" Grid.RowSpan="2"/>
-
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Photo" FontSize="16"
-                           FontWeight="Bold" Margin="0,0,0,40" Grid.RowSpan="2"/>
-                    <TextBox x:Name="Photo"
-                             Grid.Row="7"
-                             Grid.Column="3"
-                             BorderBrush="Black"
-                             BorderThickness="0.5" Grid.ColumnSpan="2" Margin="0,0,0,40" Grid.RowSpan="2"/>
-                </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Cin" FontSize="16"
-                           FontWeight="Bold" Margin="0,0,0,40" Grid.RowSpan="2"/>
-                        <TextBox x:Name="Cin"
-                             Grid.Row="9"
-                             Grid.Column="3"
-                             BorderBrush="Black"
-                             BorderThickness="0.5" Grid.ColumnSpan="2" Margin="0,0,0,40" Grid.RowSpan="2"/>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel Grid.Column="2">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Diploma" FontSize="16"
-                           FontWeight="Bold" Margin="0,0,0,40" Grid.RowSpan="2"/>
-                        <ComboBox x:Name="Diploma"
-                              Grid.Row="11"
-                              Grid.Column="3"
-                              BorderBrush="Black"
-                              BorderThickness="0.5"
-                              SelectedValue="{Binding Diploma}"
-                              ItemsSource="{Binding Source={Helpers:EnumBindingSource {x:Type domain:UniversityDiploma}}}" Grid.ColumnSpan="2"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Department" FontSize="16"
-                           FontWeight="Bold" Margin="0,0,0,40" Grid.RowSpan="2"/>
-                        <ComboBox ItemsSource="{Binding Departments}"
-                                  DisplayMemberPath="Code"
-                                  SelectedValue="{Binding Department}"
-                              Grid.Row="13"
-                              Grid.Column="3"
-                              BorderBrush="Black"
-                              BorderThickness="0.5"
-                              Grid.ColumnSpan="2"/>
+                             BorderThickness="0.5"/>
+                    
+                    <TextBlock Text="Photo" 
+                               Grid.Column="1"
+                               Grid.Row="7"
+                               FontSize="16"
+                               FontWeight="Bold" />
+                    <StackPanel Grid.Row="7" Grid.Column="3">                        
+                        <TextBox x:Name="Photo"
+                                 BorderBrush="Black"
+                                 BorderThickness="0.5"
+                                 cal:Message.Attach="[Event MouseUp] = [Action OnLoadPhoto]"/>
+                        <Image Source="{Binding Photo}"
+                               Visibility="{Binding IsAsync=True}"/>
                     </StackPanel>
 
-                </StackPanel>
+                    <TextBlock Text="Cin"
+                               Grid.Column="1"
+                               Grid.Row="9" FontSize="16"
+                       FontWeight="Bold"/>
+                    
+                    <TextBox x:Name="Cin"
+                                 Grid.Row="9"
+                                 Grid.Column="3"
+                                 BorderBrush="Black"
+                                 BorderThickness="0.5"/>
+                    
+                    <TextBlock Text="Diploma"
+                               Grid.Column="1"
+                               Grid.Row="11"
+                               FontSize="16"
+                               FontWeight="Bold"/>
+                      
+                    <ComboBox x:Name="Diploma"
+                          Grid.Row="11"
+                          Grid.Column="3"
+                          BorderBrush="Black"
+                          BorderThickness="0.5"
+                          SelectedValue="{Binding Diploma}"
+                          ItemsSource="{Binding Source={Helpers:EnumBindingSource {x:Type domain:UniversityDiploma}}}"/>
+                
+                    <TextBlock Text="Department" 
+                               Grid.Column="1"
+                               Grid.Row="13"
+                               FontSize="16"
+                               FontWeight="Bold"/>
+                    
+                    <ComboBox ItemsSource="{Binding Departments}"
+                              DisplayMemberPath="Code"
+                              SelectedValue="{Binding Department}"
+                          Grid.Row="13"
+                          Grid.Column="3"
+                          BorderBrush="Black"
+                          BorderThickness="0.5"/>                    
+                    
+                </Grid>
             </Grid>
             <Button Grid.Column="1"
-                        Grid.Row="15"
+                        Grid.Row="6"
                         Width="100"
                         HorizontalAlignment="Center"
-                        materialDesign:ButtonAssist.CornerRadius="5" Margin="0 0 0 2"
+                        materialDesign:ButtonAssist.CornerRadius="5"
                         cal:Message.Attach="[Event Click] = [Action OnSave]">
                     <Button.Content>
                         <TextBlock Text="Save"/>
                     </Button.Content>
                 </Button>
 
-                <Button Grid.Column="3"
+                <Button Grid.Column="5"
                         Width="100"
-                        HorizontalAlignment="Left"
-                        Grid.Row="15" materialDesign:ButtonAssist.CornerRadius="5" Grid.ColumnSpan="2"
+                        HorizontalAlignment="Center"
+                        Grid.Row="6" materialDesign:ButtonAssist.CornerRadius="5"
                         cal:Message.Attach="[Event Click] = [Action OnCancel]">
                     <Button.Content>
                         <TextBlock Text="Cancel" VerticalAlignment="Center"/>
