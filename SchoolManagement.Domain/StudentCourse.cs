@@ -14,7 +14,7 @@ namespace SchoolManagement.Domain
         public Student Student { get; set; }
         public int CourseId { get; set; }
         public Course Course { get; set; }
-        [Column(TypeName = "DateTime2")]
-        public DateTime? AbsenceDate { get; set; }
+        public DateTime CourseDate { get; set; }
+        public bool IsPresent { get; set; }
     }
 }

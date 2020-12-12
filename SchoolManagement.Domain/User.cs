@@ -24,7 +24,6 @@ namespace SchoolManagement.Domain
 
         public byte[] PasswordSalt { get; set; }
         public string MainPhotoUrl { get; set; }
-
     }
     
 }

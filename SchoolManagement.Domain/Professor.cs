@@ -16,9 +16,9 @@ namespace SchoolManagement.Domain
         public string Cin { get; set; }
         [Required]
         public UniversityDiploma Diplome { get; set; }
-        public int DepartmentId { get; set; }
-        [Required]
-        public bool IsHead { get; set; }
+        public ICollection<ProfessorCourse> ProfessorCourses { get; set; }
+        public ICollection<ProfessorDepartment> ProfessorDepartments { get; set; }
+        public ICollection<ProfessorClass> ProfessorClasses { get; set; }
     }
 
 }

@@ -25,12 +25,12 @@ namespace SchoolManagement.Domain
         public int NumberOfProfessors { get; set; }
 
         //1- One to many relationship with Departement
-        public int DepartmentId { get; set; }
-
         public Department Department { get; set; }
+        public ICollection<Student> Students { get; set; }
 
         // Many to many relationship with Courses
-        public ICollection<ClassCourse> Courses { get; set; }
+        public ICollection<ProfessorClass> ProfessorClasses { get; set; }
+        public ICollection<CourseClass> CourseClasses { get; set; }
 
     }
 }

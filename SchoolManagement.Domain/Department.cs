@@ -13,11 +13,10 @@ namespace SchoolManagement.Domain
         [StringLength(50)]
         public string Name { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(5)]
         public string Code { get; set; }
-        public Professor HeadDeparment { get; set; }
         public ICollection<Class> Classes { get; set; }
-        public ICollection<Professor> Professors { get; set; }
+        public ICollection<ProfessorDepartment> ProfessorDepartments { get; set; }
 
     }
 }

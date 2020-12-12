@@ -15,12 +15,10 @@ namespace SchoolManagement.Domain
         [Required]
         [StringLength(50)]
         public string Code { get; set; }
-
         public int HoursAmount { get; set; }
         public int TotalWeekAmount { get; set; }
-
-        public ICollection<StudentCourse> Students { get; set; }
-
-        public ICollection<ClassCourse> Classes { get; set; }
+        public ICollection<ProfessorCourse> ProfessorCourses { get; set; }
+        public ICollection<StudentCourse> StudentCourses { get; set; }
+        public ICollection<CourseClass> CourseClasses { get; set; }
     }
 }
