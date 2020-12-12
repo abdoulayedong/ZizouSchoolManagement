@@ -22,7 +22,7 @@ namespace SchoolManagement.API.Repositories
         /// <param name="userToRegister"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<Student> Register(Student userToRegister, string password)
+        public async Task<Administrator> Register(Administrator userToRegister, string password)
         {
             if (userToRegister == null)
             {
@@ -57,12 +57,12 @@ namespace SchoolManagement.API.Repositories
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public async Task<Student> Login(string email, string password)
+        public async Task<Administrator> Login(string email, string password)
         {
             var doesUserExists = await UserExists(email);
             if (doesUserExists == true)
             {
-                var existingUser = await _context.Students.FirstOrDefaultAsync(user => user.Email == email);
+                var existingUser = await _context.Administrators.FirstOrDefaultAsync(user => user.Email == email);
 
                 if (!VerifyPasswordHash(password, existingUser.PasswordHash, existingUser.PasswordSalt))
                     return null;
@@ -76,7 +76,7 @@ namespace SchoolManagement.API.Repositories
             
         }
 
-        public async Task<Student> GetUserById(int id)
+        public async Task<Administrator> GetUserById(int id)
         {
             if(id == 0)
             {
@@ -84,7 +84,7 @@ namespace SchoolManagement.API.Repositories
             }
             else
             {
-                return await _context.Students.FirstOrDefaultAsync(u => u.Id == id);
+                return await _context.Administrators.FirstOrDefaultAsync(u => u.Id == id);
             }
         }
         public async Task<bool> UserExists(string email)

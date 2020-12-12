@@ -99,7 +99,6 @@ namespace SchoolManagement.UI.ViewModels
             Professor.Cin = Cin;
             Professor.Email = Email;
             Professor.HiringDate = DateTime.Now;
-            Professor.Department = Department;
             Professor.Diplome = Diploma;
             Professor.MainPhotoUrl = Photo;
 

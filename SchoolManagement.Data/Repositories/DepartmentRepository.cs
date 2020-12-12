@@ -18,7 +18,6 @@ namespace SchoolManagement.Data.Repositories
 
         public async Task<Department> AddDepartment(Department department)
         {
-            await _professorRepository.UpdateProfessor(department.HeadDeparment);
             await _context.Departments.AddAsync(department);
             await _context.SaveChangesAsync();
             return department;

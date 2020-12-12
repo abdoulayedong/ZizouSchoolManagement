@@ -87,8 +87,6 @@ namespace SchoolManagement.UI.ViewModels
         {
             Department.Name = Name;
             Department.Code = Code;
-            Department.HeadDeparment = Professor;
-            Department.HeadDeparment.IsHead = true;
             //HeadDepartment.IsHead = true;            
             await _departmentRepository.AddDepartment(Department);
             await OnCancel();

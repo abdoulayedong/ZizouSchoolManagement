@@ -9,7 +9,7 @@ namespace SchoolManagement.Data
         {            
             #region Boshies Connection String
 
-           // optionsBuilder.UseSqlServer(( "Server = localhost\\SQLEXPRESS; Database = SchoolManagementDB ; Trusted_Connection = True; "));
+                optionsBuilder.UseSqlServer("Server = (localdb)\\MSSQLLocalDB; Database = SchoolManagementDB ; Trusted_Connection = True; ");
 
             #endregion
         }
@@ -23,12 +23,14 @@ namespace SchoolManagement.Data
         public DbSet<StudentCourse> StudentCourses { get; set; }
         public DbSet<CourseClass> CourseClasses { get; set; }
         public DbSet<ProfessorClass> ProfessorClasses { get; set; }
-
+        public DbSet<Administrator> Administrators { get; set; }
         // public DbSet<StudentSubject> StudentSubjects { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {           
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Student>().ToTable("Students");
+            modelBuilder.Entity<Professor>().ToTable("Professors");
 
             modelBuilder.Entity<ProfessorDepartment>()
                 .HasKey(pd => pd.Id);
@@ -85,11 +87,16 @@ namespace SchoolManagement.Data
                 .WithMany(s => s.StudentCourses)
                 .HasForeignKey(sc => sc.StudentId);
 
+            modelBuilder.Entity<Department>()
+                .HasMany(d => d.Classes)
+                .WithOne(c => c.Department);
+
+            modelBuilder.Entity<Class>()
+                .HasMany(c => c.Students)
+                .WithOne(s => s.Class);
             //modelBuilder.Entity<Department>()
             //    .HasMany(d => d.Professors).WithOne().HasForeignKey(cle => cle.DepartmentId);
 
-            //modelBuilder.Entity<Student>().ToTable("Students");
-            //modelBuilder.Entity<Professor>().ToTable("Professors").HasKey(x => x.Id);
             //modelBuilder.Entity<StudentCourse>().ToTable("Absences");
             //modelBuilder.Entity<CourseClass>().HasKey(cc => new { cc.ClassId, cc.CourseId });
         }
