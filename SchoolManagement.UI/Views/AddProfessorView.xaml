@@ -142,12 +142,14 @@
                                FontSize="16"
                                FontWeight="Bold" />
                     <StackPanel Grid.Row="7" Grid.Column="3">                        
-                        <TextBox x:Name="Photo"
+                        <TextBox Text="{Binding Photo}"
                                  BorderBrush="Black"
                                  BorderThickness="0.5"
                                  cal:Message.Attach="[Event MouseUp] = [Action OnLoadPhoto]"/>
                         <Image Source="{Binding Photo}"
-                               Visibility="{Binding IsAsync=True}"/>
+                               Height="100"
+                               Width="100"
+                               HorizontalAlignment="Right"/>
                     </StackPanel>
 
                     <TextBlock Text="Cin"

@@ -89,7 +89,7 @@ namespace SchoolManagement.API.Repositories
         }
         public async Task<bool> UserExists(string email)
         {
-            if (await _context.Students.AnyAsync(x => x.Email == email))
+            if (await _context.Administrators.AnyAsync(x => x.Email == email))
                 return true;
 
             return false;

@@ -11,5 +11,6 @@ namespace SchoolManagement.Data.Repositories
         Task<Department> GetDepartmentById(int Id);
         List<Department> GetDepartments();
         Task<Department> UpdateDepartment(Department department);
+        Task<ProfessorDepartment> ProfessorDepartment(ProfessorDepartment professorDepartment);
     }
 }

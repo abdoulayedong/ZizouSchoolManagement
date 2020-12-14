@@ -47,5 +47,12 @@ namespace SchoolManagement.Data.Repositories
             _context.Departments.Remove(department);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<ProfessorDepartment> ProfessorDepartment(ProfessorDepartment professorDepartment)
+        {
+            await _context.ProfessorDepartments.AddAsync(professorDepartment);
+            await _context.SaveChangesAsync();
+            return professorDepartment;
+        }
     }
 }

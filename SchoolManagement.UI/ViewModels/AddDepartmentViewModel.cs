@@ -1,11 +1,8 @@
 ﻿using Caliburn.Micro;
-using SchoolManagement.Data;
 using SchoolManagement.Data.Repositories;
 using SchoolManagement.Domain;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -82,13 +79,33 @@ namespace SchoolManagement.UI.ViewModels
             return Task.CompletedTask;
         }
         #endregion
+
         #region Method
         public async Task OnSaveDepartment()
         {
             Department.Name = Name;
             Department.Code = Code;
-            //HeadDepartment.IsHead = true;            
-            await _departmentRepository.AddDepartment(Department);
+            try
+            {
+                Department = await _departmentRepository.AddDepartment(Department);
+            }
+            catch(DbException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            if(Professor.Id != 0)
+            {
+                var profDep = new ProfessorDepartment() { DepartmentId = Department.Id, ProfessorId = Professor.Id, IsHead = true };
+                try
+                {
+                    await _departmentRepository.ProfessorDepartment(profDep);
+                }
+                catch (DbException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
             await OnCancel();
         }
 

@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Microsoft.Win32;
 using SchoolManagement.Data.Repositories;
 using SchoolManagement.Domain;
 using System;
@@ -108,6 +109,18 @@ namespace SchoolManagement.UI.ViewModels
         public async Task OnCancel()
         {
             await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.Professor);
+        }
+
+        public async Task OnLoadPhoto()
+        {
+            using(System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files(*.BMP, *.JPG, *.PNG, *.GIF)|*.BMP;*.JPG;*.PNG;*.GIF";
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Photo = new Uri(openFileDialog.FileName).ToString();
+                }
+            }            
         }
         #endregion
 
