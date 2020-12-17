@@ -76,6 +76,12 @@ namespace SchoolManagement.UI.ViewModels
                     break;
                 case ViewType.AddClass:
                     break;
+                case ViewType.UpdateDepartment:
+                    var vm = _simpleContainer.GetInstance<UpdateDepartmentViewModel>();
+                    ActivateItemAsync(vm);
+                    break;
+                case ViewType.UpdateProfessor:
+                    break;
             };
             return Task.CompletedTask;
         }

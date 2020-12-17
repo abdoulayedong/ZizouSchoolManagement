@@ -4,9 +4,6 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"            
              xmlns:context="clr-namespace:SchoolManagement.UI.ViewModels"
              >
-    <UserControl.DataContext>
-        <context:DashboardViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>

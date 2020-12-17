@@ -50,7 +50,7 @@
                        Grid.Row="3"
                        Height="2"
                        HorizontalAlignment="Center"
-                       Width="165"
+                       Width="200"
                        Grid.Column="0" 
                        Grid.ColumnSpan="7"/>
 
@@ -102,6 +102,7 @@
                           BorderBrush="Black"
                           ItemsSource="{Binding Professors}"
                           SelectedValue="{Binding Professor}"
+                          SelectedValuePath="FirstName"
                           BorderThickness="0.5">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
@@ -119,7 +120,7 @@
                     Width="100"
                     HorizontalAlignment="Center"
                     materialDesign:ButtonAssist.CornerRadius="5"
-                    cal:Message.Attach="[Event Click] = [Action OnSaveDepartment]">
+                    cal:Message.Attach="[Event Click] = [Action OnUpdateDepartment]">
                 <Button.Content>
                     <TextBlock Text="Update"/>
                 </Button.Content>
@@ -129,7 +130,7 @@
                     Width="100"
                     HorizontalAlignment="Center"
                     Grid.Row="6" materialDesign:ButtonAssist.CornerRadius="5"
-                    cal:Message.Attach="[Event Click] = [Action OnCancel]">
+                    cal:Message.Attach="[Event Click] = [Action OnClose]">
                 <Button.Content>
                     <TextBlock Text="Cancel" VerticalAlignment="Center"/>
                 </Button.Content>

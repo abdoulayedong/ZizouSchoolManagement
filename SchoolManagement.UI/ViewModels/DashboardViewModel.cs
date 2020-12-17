@@ -5,45 +5,104 @@ using SchoolManagement.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SchoolManagement.UI.ViewModels
 {
     public class DashboardViewModel : Screen
-    {   
-        private WindowManager manager;
-        private SimpleContainer container;
-        private EventAggregator aggregator;
-        public BindableCollection<Student> Students { get; set; } = new BindableCollection<Student>();
-        public int TotalStudent { get; set; }
-        public int TotatFille { get; set; }
-        public int TotalGarcon { get; set; }
-        public int TotalClass { get; set; }
-        private SchoolManagmentDBContext context;
-        private StudentRepository StudentRepository;
-        private ClassRepository ClassRepository;
-        public DashboardViewModel()
+    {
+        #region Private fields
+        private IWindowManager _manager;
+        private SimpleContainer _container;
+        private IEventAggregator _aggregator;
+        private IStudentRepository _studentRepository;
+        private IClassRepository _classRepository;
+        private BindableCollection<Student> _students;
+        private Student _student;
+
+
+        private int _totalClass;
+        private int _totalStudent;
+        private int _totalFille;
+        private int _totalGarcon;
+        #endregion
+
+        #region Constructeur
+        public DashboardViewModel(IWindowManager manager, IEventAggregator aggregator, SimpleContainer container,
+            IStudentRepository studentRepository, IClassRepository classRepository)
         {
-            manager = new WindowManager();
-            container = new SimpleContainer();
-            aggregator = new EventAggregator();
-            context = new SchoolManagmentDBContext();
-            StudentRepository = new StudentRepository(context);
-            ClassRepository = new ClassRepository(context);
-            TotalClass = ClassRepository.GetClasses().Count;
-            var dep = StudentRepository.GetStudents();
-            TotalStudent = dep.Count;
-            foreach(var stu in dep)
-            {
-                if(stu.Gender == Gender.Femme)
-                {
-                    TotatFille++;
-                }
-                else if(stu.Gender == Gender.Homme)
-                {
-                    TotalGarcon++;
-                }
-            }
-            Students.AddRange(dep);
+            _manager = manager;
+            _container = container;
+            _aggregator = aggregator;
+            _studentRepository = studentRepository;
+            _classRepository = classRepository;
         }
+        #endregion
+
+        #region Override Screen Methods
+        protected override Task OnInitializeAsync(CancellationToken cancellationToken)
+        {
+            Task.Run(() => TotalClass = _classRepository.GetClasses().Count);
+            Task.Run(() =>
+            {
+                var students = _studentRepository.GetStudents();
+                TotalStudent = students.Count;
+                foreach(var student in students)
+                {
+                    if(student.Gender == Gender.Femme)
+                    {
+                        TotalFille ++;
+                    }else if (student.Gender == Gender.Homme)
+                    {
+                        TotalGarcon ++;
+                    }
+                }
+                if(students.Count != 0)
+                {
+                    Students.AddRange(students);
+
+                }
+            });
+            return base.OnInitializeAsync(cancellationToken);
+        }
+        #endregion
+
+        #region Public fields
+        public Student Student
+        {
+            get { return _student; }
+            set { _student = value; NotifyOfPropertyChange(() => Student); }
+        }
+        public BindableCollection<Student> Students
+        {
+            get { return _students; }
+            set { _students = value; NotifyOfPropertyChange(() => Students); }
+        }
+
+        public int TotalStudent
+        {
+            get { return _totalStudent; }
+            set { _totalStudent = value; NotifyOfPropertyChange(() => TotalStudent); }
+        }
+
+        public int TotalFille
+        {
+            get { return _totalFille; }
+            set { _totalFille = value; NotifyOfPropertyChange(() => TotalFille); }
+        }
+
+        public int TotalGarcon
+        {
+            get { return _totalGarcon; }
+            set { _totalGarcon = value; NotifyOfPropertyChange(() => TotalGarcon); }
+        }
+
+        public int TotalClass
+        {
+            get { return _totalClass; }
+            set { _totalClass = value; NotifyOfPropertyChange(() => TotalClass); }
+        }
+        #endregion
     }
 }

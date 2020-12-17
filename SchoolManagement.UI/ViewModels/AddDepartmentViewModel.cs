@@ -75,7 +75,7 @@ namespace SchoolManagement.UI.ViewModels
         #region Override Methode Caliburn
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            Professors.AddRange(_professorRepository.GetProfessors());
+            Task.Run(() => Professors.AddRange(_professorRepository.GetProfessors()));
             return Task.CompletedTask;
         }
         #endregion

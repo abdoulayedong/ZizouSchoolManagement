@@ -29,8 +29,8 @@ namespace SchoolManagement.UI.ViewModels
 
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            var professor = _professorRepository.GetProfessors();
-            Professors.AddRange(professor);
+            //var professor = ;
+            Task.Run(() => Professors.AddRange(_professorRepository.GetProfessors()));
             return base.OnInitializeAsync(cancellationToken);
         }
 

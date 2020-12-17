@@ -4,6 +4,7 @@
     {
         AddDepartment,
         Department,
+        UpdateDepartment,
         Professor,
         AddProfessor,
         UpdateProfessor,

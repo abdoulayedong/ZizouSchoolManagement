@@ -81,6 +81,9 @@ namespace SchoolManagement.UI.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly SimpleContainer _container;
         public Professor Professor { get; set; } = new Professor();
+        #endregion
+
+        #region Constructor
         public AddProfessorViewModel(IProfessorRepository professorRepository, IDepartmentRepository departmentRepository,
             IWindowManager manager, IEventAggregator eventAggregator, SimpleContainer container)
         {
@@ -127,7 +130,7 @@ namespace SchoolManagement.UI.ViewModels
         #region Override Screen Class
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            Departments.AddRange(_departmentRepository.GetDepartments());
+            //Departments.AddRange();
             return base.OnInitializeAsync(cancellationToken);   
         }
 

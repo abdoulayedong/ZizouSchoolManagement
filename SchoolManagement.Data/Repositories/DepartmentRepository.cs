@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using SchoolManagement.Data.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace SchoolManagement.Data.Repositories
 {
@@ -28,9 +30,24 @@ namespace SchoolManagement.Data.Repositories
             return await _context.Departments.FindAsync(Id);
         }
 
-        public List<Department> GetDepartments()
+        public List<DepartmentProfessor> GetDepartments()
         {
-            return _context.Departments.ToList();
+            var DepartmentProfessors = _context.DepartmentProfessors.ToList();
+            //var Department = from department in _context.Departments
+            //                 from professorDepartment in _context.ProfessorDepartments
+            //                 where professorDepartment.DepartmentId == department.Id
+            //                 from professor in _context.Professors
+            //                 where professor.Id == professorDepartment.ProfessorId
+            //                 select new DepartmentDTO
+            //                 {
+            //                     DepartmentId = department.Id,
+            //                     ProfessorId = professor.Id,
+            //                     Code = department.Code,
+            //                     HeadDeparment = professor.FirstName+ " " + professor.LastName,
+            //                     Name = department.Name
+            //                 };
+            //return Department.ToList();
+            return DepartmentProfessors;
         }
 
         public async Task<Department> UpdateDepartment(Department department)
@@ -53,6 +70,23 @@ namespace SchoolManagement.Data.Repositories
             await _context.ProfessorDepartments.AddAsync(professorDepartment);
             await _context.SaveChangesAsync();
             return professorDepartment;
+        }
+
+        public async Task<ProfessorDepartment> UpdateProfessorDepartment(ProfessorDepartment professorDepartment)
+        {
+            var professor = _context.ProfessorDepartments
+                .Where(p => p.DepartmentId == professorDepartment.DepartmentId && p.ProfessorId == professorDepartment.ProfessorId)
+                .FirstOrDefault();
+            if(professor == null)
+            {
+                await ProfessorDepartment(professorDepartment);
+            }
+            else
+            {
+                professor.IsHead = professorDepartment.IsHead;
+                await _context.SaveChangesAsync();
+            }
+            return professor;
         }
     }
 }

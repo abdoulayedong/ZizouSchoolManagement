@@ -5,10 +5,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              Height="540"
              Width="730"
-             xmlns:context="clr-namespace:SchoolManagement.UI.ViewModels"             >
-    <UserControl.DataContext>
-        <context:StudentViewModel/>
-    </UserControl.DataContext>
+             xmlns:context="clr-namespace:SchoolManagement.UI.ViewModels"        >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>

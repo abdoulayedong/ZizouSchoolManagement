@@ -24,11 +24,16 @@ namespace SchoolManagement.Data
         public DbSet<CourseClass> CourseClasses { get; set; }
         public DbSet<ProfessorClass> ProfessorClasses { get; set; }
         public DbSet<Administrator> Administrators { get; set; }
-        // public DbSet<StudentSubject> StudentSubjects { get; set; }
+        public virtual DbSet<DepartmentProfessor> DepartmentProfessors { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {           
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<DepartmentProfessor>(dp =>
+            {
+                dp.ToView("vwDepartmentProfessor");
+            });
+
             modelBuilder.Entity<Student>().ToTable("Students");
             modelBuilder.Entity<Professor>().ToTable("Professors");
 
