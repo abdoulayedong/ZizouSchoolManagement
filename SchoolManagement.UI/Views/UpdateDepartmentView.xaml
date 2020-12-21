@@ -97,19 +97,32 @@
                          BorderBrush="Black"
                          BorderThickness="0.5"/>
 
+                <!--<TextBlock Grid.Column="3"
+                           Grid.Row="5">
+                    <TextBlock.Text>
+                        <MultiBinding StringFormat=" {0} {1}">
+                            <Binding Path="Professor.FirstName"/>
+                            <Binding Path="Professor.LastName"/>
+                        </MultiBinding>
+                    </TextBlock.Text>
+                </TextBlock>-->
+
                 <ComboBox Grid.Row="5"
                           Grid.Column="3"
                           BorderBrush="Black"
                           ItemsSource="{Binding Professors}"
                           SelectedValue="{Binding Professor}"
-                          SelectedValuePath="FirstName"
                           BorderThickness="0.5">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal">                                
-                                <TextBlock Text="{Binding FirstName}" Margin="10 0"/>
-                                <TextBlock Text="{Binding LastName}"/>
-                            </StackPanel>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat=" {0} {1}">
+                                        <Binding Path="FirstName"/>
+                                        <Binding Path="LastName"/>
+                                    </MultiBinding>
+                                </TextBlock.Text>                                
+                            </TextBlock>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>

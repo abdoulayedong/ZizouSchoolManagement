@@ -141,16 +141,23 @@
                                Grid.Row="7"
                                FontSize="16"
                                FontWeight="Bold" />
-                    <StackPanel Grid.Row="7" Grid.Column="3">                        
-                        <TextBox Text="{Binding Photo}"
-                                 BorderBrush="Black"
-                                 BorderThickness="0.5"
-                                 cal:Message.Attach="[Event MouseUp] = [Action OnLoadPhoto]"/>
-                        <Image Source="{Binding Photo}"
-                               Height="100"
-                               Width="100"
-                               HorizontalAlignment="Right"/>
+
+                    <StackPanel Grid.Row="7" Grid.Column="3" 
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right">                        
+                        <Button Content="Add image ..."
+                                Background="LightGray"
+                                Foreground="Black"
+                                BorderThickness="0"
+                                cal:Message.Attach="[Event Click] = [Action OnLoadPhoto]"/>
                     </StackPanel>
+                    <Image Grid.Row="7" Grid.Column="3"
+                           Source="{Binding Photo}"
+                           Height="100"
+                           Width="100"
+                           HorizontalAlignment="Left"/>
+                
 
                     <TextBlock Text="Cin"
                                Grid.Column="1"
@@ -182,15 +189,20 @@
                                Grid.Row="13"
                                FontSize="16"
                                FontWeight="Bold"/>
-                    
+
                     <ComboBox ItemsSource="{Binding Departments}"
-                              DisplayMemberPath="Code"
                               SelectedValue="{Binding Department}"
                           Grid.Row="13"
                           Grid.Column="3"
                           BorderBrush="Black"
-                          BorderThickness="0.5"/>                    
-                    
+                          BorderThickness="0.5">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
                 </Grid>
             </Grid>
             <Button Grid.Column="1"

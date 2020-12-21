@@ -2,6 +2,7 @@
 using SchoolManagement.Data.DTOs;
 using SchoolManagement.Data.Repositories;
 using SchoolManagement.Domain;
+using SchoolManagement.UI.Helpers;
 using System;
 using System.Data.Common;
 using System.Linq;
@@ -15,12 +16,16 @@ namespace SchoolManagement.UI.ViewModels
         #region Private fields
         private string _name;
         private string _code;
+        private Professor _professor;
         private BindableCollection<Professor> _professors = new BindableCollection<Professor>();
+        private readonly ConfirmationDialogHelper _confirmationDialogHelper;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IProfessorRepository _professorRepository;
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManager _manager;
         private readonly SimpleContainer _container;
+        private Department _department = new Department(); 
+
         #endregion
 
         #region Constructor
@@ -32,6 +37,7 @@ namespace SchoolManagement.UI.ViewModels
             _eventAggregator = eventAggregator;
             _manager = manager;
             _container = container;
+            _confirmationDialogHelper = new ConfirmationDialogHelper(_manager, _eventAggregator, _container);
             _eventAggregator.SubscribeOnPublishedThread(this);
         }
         #endregion
@@ -40,12 +46,12 @@ namespace SchoolManagement.UI.ViewModels
         public Task HandleAsync(DepartmentProfessor message, CancellationToken cancellationToken)
         {
             Department.Id = message.DepartmentId;
+            Department.Name = message.Name;
+            Department.Code = message.Code;
             Name = message.Name;
             Code = message.Code;
             var prof = _professorRepository.GetProfessors();
             Professors.AddRange(prof);
-            //Task.Run(() => Professors.AddRange(_professorRepository.GetProfessors()));
-            //Professors.AddRange();
             Id = message.ProfessorId;
             if(Professors.Count != 0)
             {
@@ -66,11 +72,15 @@ namespace SchoolManagement.UI.ViewModels
         #region Methods
         public async Task OnUpdateDepartment()
         {
-            Department.Code = Code;
-            Department.Name = Name;
+            var depart = new Department()
+            {
+                Id = Department.Id,
+                Code = Code,
+                Name = Name
+            };
             try
             {
-                await _departmentRepository.UpdateDepartment(Department);
+                await _departmentRepository.UpdateDepartment(depart);
             }
             catch (DbException ex)
             {
@@ -102,8 +112,19 @@ namespace SchoolManagement.UI.ViewModels
 
         public async Task OnClose()
         {
-            await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.Department);
-            await TryCloseAsync();
+            if(Name != Department.Name || Code != Department.Code)
+            {
+                var result = await _confirmationDialogHelper.ConfirmationWindowCall(ElementType.UpdateDepartment);
+                if (result)
+                {
+                    await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.Department);
+                    await TryCloseAsync();
+                }
+            } else
+            {
+                await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.Department);
+                await TryCloseAsync();
+            }
         }
         #endregion
 
@@ -133,6 +154,11 @@ namespace SchoolManagement.UI.ViewModels
             }
         }
 
+        public Department Department
+        {
+            get { return _department; }
+            set { _department = value; NotifyOfPropertyChange(() => Department); }
+        }
 
         public string Code
         {
@@ -148,8 +174,7 @@ namespace SchoolManagement.UI.ViewModels
                 _professors = value; 
                 NotifyOfPropertyChange(() => Professors); }
         }
-        public Department Department { get; set; } = new Department();
-        private Professor _professor;
+        
 
         public Professor Professor
         {

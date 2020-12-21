@@ -10,77 +10,20 @@ namespace SchoolManagement.UI.ViewModels
 {
     public class AddProfessorViewModel : Screen
     {
-        #region Fields
+        #region Private Fields
         private string firstName;
-
-        public string FirstName
-        {
-            get { return firstName; }
-            set { firstName = value; NotifyOfPropertyChange(() => FirstName); }
-        }
-
         private string lastName;
-
-        public string LastName
-        {
-            get { return lastName; }
-            set { lastName = value; NotifyOfPropertyChange(() => LastName); }
-        }
-
         private string email;
-
-        public string Email
-        {
-            get { return email; }
-            set { email = value; NotifyOfPropertyChange(() => Email); }
-        }
-
         private string photo;
-
-        public string Photo
-        {
-            get { return photo; }
-            set { photo = value; NotifyOfPropertyChange(() => Photo); }
-        }
-
         private string cin;
-
-        public string Cin
-        {
-            get { return cin; }
-            set { cin = value; NotifyOfPropertyChange(() => Cin); }
-        }
-
         private UniversityDiploma _diploma;
-
-        public UniversityDiploma Diploma
-        {
-            get { return _diploma; }
-            set { _diploma = value; NotifyOfPropertyChange(()=>Diploma); }
-        }
-
-        private BindableCollection<Department> departments = new BindableCollection<Department>();
-
-        public BindableCollection<Department> Departments
-        {
-            get { return departments; }
-            set { departments = value; NotifyOfPropertyChange(() => Departments );  }
-        }
-
-        private Department department;
-
-        public Department Department
-        {
-            get { return department; }
-            set { department = value; NotifyOfPropertyChange(() => Department); }
-        }
-
+        private BindableCollection<DepartmentProfessor> departments = new BindableCollection<DepartmentProfessor>();
+        private DepartmentProfessor department;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IProfessorRepository _professorRepository;
         private readonly IWindowManager _manager;
         private readonly IEventAggregator _eventAggregator;
         private readonly SimpleContainer _container;
-        public Professor Professor { get; set; } = new Professor();
         #endregion
 
         #region Constructor
@@ -121,6 +64,9 @@ namespace SchoolManagement.UI.ViewModels
                 openFileDialog.Filter = "Image Files(*.BMP, *.JPG, *.PNG, *.GIF)|*.BMP;*.JPG;*.PNG;*.GIF";
                 if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
+                    //var test = new Uri(openFileDialog.FileName)
+                    //    .ToString().Split('/');
+                    //Photo = (test[test.Length - 1].Split('.'))[0];
                     Photo = new Uri(openFileDialog.FileName).ToString();
                 }
             }            
@@ -130,11 +76,64 @@ namespace SchoolManagement.UI.ViewModels
         #region Override Screen Class
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
-            //Departments.AddRange();
+            var deps = _departmentRepository.GetDepartments();
+            if(deps.Count != 0)
+            {
+                Departments.AddRange(deps);
+            }
             return base.OnInitializeAsync(cancellationToken);   
         }
+        #endregion
 
-       
+        #region Public Fields
+        public string FirstName
+        {
+            get { return firstName; }
+            set { firstName = value; NotifyOfPropertyChange(() => FirstName); }
+        }
+
+        public string LastName
+        {
+            get { return lastName; }
+            set { lastName = value; NotifyOfPropertyChange(() => LastName); }
+        }
+
+        public string Email
+        {
+            get { return email; }
+            set { email = value; NotifyOfPropertyChange(() => Email); }
+        }
+        public string Photo
+        {
+            get { return photo; }
+            set { photo = value; NotifyOfPropertyChange(() => Photo); }
+        }
+
+        public string Cin
+        {
+            get { return cin; }
+            set { cin = value; NotifyOfPropertyChange(() => Cin); }
+        }
+
+        public UniversityDiploma Diploma
+        {
+            get { return _diploma; }
+            set { _diploma = value; NotifyOfPropertyChange(() => Diploma); }
+        }
+
+        public BindableCollection<DepartmentProfessor> Departments
+        {
+            get { return departments; }
+            set { departments = value; NotifyOfPropertyChange(() => Departments); }
+        }
+
+        public DepartmentProfessor Department
+        {
+            get { return department; }
+            set { department = value; NotifyOfPropertyChange(() => Department); }
+        }
+
+        public Professor Professor { get; set; } = new Professor();
         #endregion
     }
 }

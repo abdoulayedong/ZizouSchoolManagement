@@ -3,6 +3,7 @@ using SchoolManagement.Data;
 using SchoolManagement.Data.DTOs;
 using SchoolManagement.Data.Repositories;
 using SchoolManagement.Domain;
+using SchoolManagement.UI.Helpers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +16,7 @@ namespace SchoolManagement.UI.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManager _manager;
         private readonly SimpleContainer _container;
+        private readonly ConfirmationDialogHelper _confirmationDialogHelper;
         private DepartmentProfessor department;
         private BindableCollection<DepartmentProfessor> departments = new BindableCollection<DepartmentProfessor>();
         private bool _isUpdateDepartment;
@@ -59,6 +61,7 @@ namespace SchoolManagement.UI.ViewModels
             _eventAggregator = eventAggregator;
             _manager = manager;
             _container = container;
+            _confirmationDialogHelper = new ConfirmationDialogHelper(_manager, _eventAggregator, container);
             _eventAggregator.SubscribeOnPublishedThread(this);
         }
         #endregion
@@ -103,14 +106,25 @@ namespace SchoolManagement.UI.ViewModels
         }
 
         public async Task OnUpdateDepartment(DepartmentProfessor department)
-          {
+        {
             await _eventAggregator.PublishOnBackgroundThreadAsync(ViewType.UpdateDepartment);
             await _eventAggregator.PublishOnBackgroundThreadAsync(department);
         }
 
         public async Task OnDeleteDepartment(DepartmentProfessor department)
         {
-            
+            var result = await _confirmationDialogHelper.ConfirmationWindowCall(ElementType.Department);
+            if (result)
+            {
+                var dep = new Domain.Department()
+                {
+                    Id = department.DepartmentId,
+                    Code = department.Code,
+                    Name = department.Name
+                };
+                Departments.Remove(department);
+                _departmentRepository.DeleteDepartment(dep);
+            }
         }
 
         #endregion

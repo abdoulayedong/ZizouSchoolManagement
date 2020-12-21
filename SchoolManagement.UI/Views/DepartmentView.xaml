@@ -90,6 +90,7 @@
                     Grid.Row="5"
                     Cursor="Hand"
                     materialDesign:ButtonAssist.CornerRadius="3"
+                    Visibility="Collapsed"
                     cal:Message.Attach="[Event Click] = [Action UpdateDepartment]">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
@@ -105,12 +106,32 @@
                 </Button.Content>
             </Button>
 
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="5"
+                        Grid.Column="5"
+                        VerticalAlignment="Center">
+                <TextBox Text="{Binding DepartmentSearch}"
+                         BorderBrush="Blue"
+                         materialDesign:HintAssist.Hint="Search ..."
+                         BorderThickness="0"
+                         Width="170"
+                         Height="auto"/>
+                <Button Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="Black"
+                        cal:Message.Attach="[Event Click] = [Action OnSearchDepartment]">
+                    <materialDesign:PackIcon Kind="Search"/>
+                </Button>
+
+            </StackPanel>
+            
             <Button Height="60"
                     Background="OrangeRed"
                     Grid.Column="5"
                     Grid.Row="5"
                     Cursor="Hand"
                     materialDesign:ButtonAssist.CornerRadius="3"
+                    Visibility="Collapsed"
                     cal:Message.Attach="[Event Click] = [Action DeleteDepartment]">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
@@ -125,80 +146,6 @@
                 </Button.Content>
             </Button>
 
-            <!--<ListBox ItemsSource="{Binding Departments}"
-                     Grid.Row="7"
-                     Grid.Column="0"
-                     Grid.ColumnSpan="9"
-                     SelectedItem="{Binding Department}"
-                     HorizontalContentAlignment="Stretch">
-                <ListBox.Template>
-                    <ControlTemplate>
-                        <DockPanel LastChildFill="True">
-                            <Grid DockPanel.Dock="Top" Height="30">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="20"/>
-                                    <ColumnDefinition Width="0.3*"/>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="5"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="5"/>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="5"/>
-                                    <ColumnDefinition Width="AUTO"/>
-                                    <ColumnDefinition Width="5"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="1">Code</Label>
-                                <Label Grid.Column="3">Name</Label>
-                                <Label Grid.Column="5">Head of Department</Label>
-                            </Grid>
-                            <ItemsPresenter/>
-                        </DockPanel>
-                    </ControlTemplate>
-                </ListBox.Template>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="0.3*"/>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="AUTO"/>
-                                <ColumnDefinition Width="5"/>
-                                <ColumnDefinition Width="AUTO"/>
-                                <ColumnDefinition Width="5"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="1" Text="{Binding Code}" Foreground="Black"/>
-                            <TextBlock Grid.Column="3" Text="{Binding Name}" Foreground="Black"/>
-                            <TextBlock Grid.Column="5" Text="{Binding HeadDeparment}" Foreground="Black"/>
-                            
-                            
-                            <Button Grid.Column="7" 
-                                    Content="Update"
-                                    Foreground="Black"
-                                    BorderThickness="0" 
-                                    HorizontalAlignment="Center" 
-                                    Visibility="{Binding IsUpdateDepartment, Converter= {StaticResource BooleanConverter}}"
-                                    cal:Message.Attach="[Event Click] = [Action OnUpdateDepartment($dataContext)]">
-                            </Button>
-
-                            <Button Grid.Column="9" 
-                                    Content="Delete"
-                                    Foreground="Black"
-                                    BorderThickness="0"
-                                    HorizontalAlignment="Center"
-                                    Visibility="{Binding IsDeleteDepartment, Converter= {StaticResource BoolToVisibility}}"
-                                    cal:Message.Attach="[Event Click] = [Action OnDeleteDepartment($dataContext)]" >
-                            </Button>
-                         
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>-->
             <DataGrid ItemsSource="{Binding Departments}"
                       SelectedItem="{Binding Department}"
                       SelectionMode="Single"
@@ -209,23 +156,20 @@
                       CanUserReorderColumns="False" CanUserResizeColumns="False" 
                       CanUserResizeRows="True" CanUserSortColumns="True"
                       CanUserAddRows="False" CanUserDeleteRows="False"
-                      IsReadOnly="True" HeadersVisibility="All" >
-                
+                      IsReadOnly="True" HeadersVisibility="All">                
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Head Department"
                                         Binding="{Binding FirstName}"
-                                        Foreground="Black"/>
-                    
+                                        Foreground="Black"/>                    
                     <DataGridTextColumn Binding="{Binding LastName}" 
-                                        Foreground="Black"  />
+                                        Foreground="Black"/>
                     <DataGridTextColumn Header="Code"
                                         Binding="{Binding Code}" 
-                                        Foreground="Black"  />
+                                        Foreground="Black"/>
                     <DataGridTextColumn Header="DepartmentName"
                                         Binding="{Binding Name}" 
-                                        Foreground="Black" />
-                    
-                    <DataGridTemplateColumn >
+                                        Foreground="Black"/>                    
+                    <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Background="Transparent" Foreground="Black" BorderThickness="0"
