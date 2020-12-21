@@ -81,6 +81,7 @@ namespace SchoolManagement.UI.ViewModels
                     ActivateItemAsync(vm);
                     break;
                 case ViewType.UpdateProfessor:
+                    ActivateItemAsync(_simpleContainer.GetInstance<UpdateProfessorViewModel>());
                     break;
             };
             return Task.CompletedTask;

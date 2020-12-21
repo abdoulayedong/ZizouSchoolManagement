@@ -1,14 +1,16 @@
 ﻿using Caliburn.Micro;
-using Microsoft.Win32;
 using SchoolManagement.Data.Repositories;
 using SchoolManagement.Domain;
+using SchoolManagement.UI.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SchoolManagement.UI.ViewModels
 {
-    public class AddProfessorViewModel : Screen
+    public class UpdateProfessorViewModel : Screen, IHandle<Professor>
     {
         #region Private Fields
         private string firstName;
@@ -16,6 +18,8 @@ namespace SchoolManagement.UI.ViewModels
         private string email;
         private string photo;
         private string cin;
+        private Professor _professor = new Professor();
+        public Professor GetProfessor { get; set; }
         private UniversityDiploma _diploma;
         private BindableCollection<DepartmentProfessor> departments = new BindableCollection<DepartmentProfessor>();
         private DepartmentProfessor department;
@@ -24,10 +28,11 @@ namespace SchoolManagement.UI.ViewModels
         private readonly IWindowManager _manager;
         private readonly IEventAggregator _eventAggregator;
         private readonly SimpleContainer _container;
+        private readonly ConfirmationDialogHelper _confirmationDialogHelper;
         #endregion
 
         #region Constructor
-        public AddProfessorViewModel(IProfessorRepository professorRepository, IDepartmentRepository departmentRepository,
+        public UpdateProfessorViewModel(IProfessorRepository professorRepository, IDepartmentRepository departmentRepository,
             IWindowManager manager, IEventAggregator eventAggregator, SimpleContainer container)
         {
             _professorRepository = professorRepository;
@@ -35,12 +40,15 @@ namespace SchoolManagement.UI.ViewModels
             _manager = manager;
             _eventAggregator = eventAggregator;
             _container = container;
+            _confirmationDialogHelper = new ConfirmationDialogHelper(_manager, _eventAggregator, _container);
+            _eventAggregator.SubscribeOnPublishedThread(this);
         }
         #endregion
 
         #region Methods
-        public async Task OnSave()
+        public async Task OnUpdate()
         {
+            Professor.Id = GetProfessor.Id;
             Professor.FirstName = FirstName;
             Professor.LastName = LastName;
             Professor.Cin = Cin;
@@ -48,13 +56,7 @@ namespace SchoolManagement.UI.ViewModels
             Professor.HiringDate = DateTime.Now;
             Professor.Diplome = Diploma;
             Professor.MainPhotoUrl = Photo;
-            try
-            {
-                await _professorRepository.AddProfessor(Professor);
-            }catch(Exception ex)
-            {
-                Console.WriteLine("Exception de type " + ex.Message);
-            }
+            await _professorRepository.UpdateProfessor(Professor);
             await OnCancel();
         }
         public async Task OnCancel()
@@ -62,20 +64,16 @@ namespace SchoolManagement.UI.ViewModels
             await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.Professor);
         }
 
-        public Task OnLoadPhoto()
+        public async Task OnLoadPhoto()
         {
-            using(System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog())
+            using (System.Windows.Forms.OpenFileDialog openFileDialog = new System.Windows.Forms.OpenFileDialog())
             {
                 openFileDialog.Filter = "Image Files(*.BMP, *.JPG, *.PNG, *.GIF)|*.BMP;*.JPG;*.PNG;*.GIF";
                 if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    //var test = new Uri(openFileDialog.FileName)
-                    //    .ToString().Split('/');
-                    //Photo = (test[test.Length - 1].Split('.'))[0];
                     Photo = new Uri(openFileDialog.FileName).ToString();
                 }
             }
-            return Task.CompletedTask;
         }
         #endregion
 
@@ -83,11 +81,33 @@ namespace SchoolManagement.UI.ViewModels
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
             var deps = _departmentRepository.GetDepartments();
-            if(deps.Count != 0)
+            if (deps.Count != 0)
             {
                 Departments.AddRange(deps);
             }
-            return base.OnInitializeAsync(cancellationToken);   
+            return base.OnInitializeAsync(cancellationToken);
+        }
+        #endregion
+
+        #region Handle Method
+        public Task HandleAsync(Professor message, CancellationToken cancellationToken)
+        {
+            GetProfessor = message;
+            FirstName = message.FirstName;
+            LastName = message.LastName;
+            Email = message.Email;
+            Photo = message.MainPhotoUrl;
+            Cin = message.Cin;
+            Diploma = message.Diplome;
+            foreach(var departm in Departments)
+            {
+                if(departm.ProfessorId == message.Id)
+                {
+                    Department = departm;
+                    goto end;
+                }
+            }
+end :       return Task.CompletedTask;
         }
         #endregion
 
@@ -137,9 +157,14 @@ namespace SchoolManagement.UI.ViewModels
         {
             get { return department; }
             set { department = value; NotifyOfPropertyChange(() => Department); }
+        }       
+
+        public Professor Professor
+        {
+            get { return _professor; }
+            set { _professor = value; NotifyOfPropertyChange(() => Professor); }
         }
 
-        public Professor Professor { get; set; } = new Professor();
         #endregion
     }
 }

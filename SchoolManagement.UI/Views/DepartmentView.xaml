@@ -29,8 +29,7 @@
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
-        <Grid Background="White" Grid.Row="1" Grid.Column="1"
-              cal:Message.Attach="[Event MouseDown] = [Action OnDesactivate]">
+        <Grid Background="White" Grid.Row="1" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="*"/>
@@ -122,7 +121,6 @@
                         cal:Message.Attach="[Event Click] = [Action OnSearchDepartment]">
                     <materialDesign:PackIcon Kind="Search"/>
                 </Button>
-
             </StackPanel>
             
             <Button Height="60"
@@ -158,11 +156,20 @@
                       CanUserAddRows="False" CanUserDeleteRows="False"
                       IsReadOnly="True" HeadersVisibility="All">                
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Head Department"
-                                        Binding="{Binding FirstName}"
-                                        Foreground="Black"/>                    
-                    <DataGridTextColumn Binding="{Binding LastName}" 
-                                        Foreground="Black"/>
+                    <DataGridTemplateColumn Header="Head Department">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat=" {0} {1}">
+                                            <Binding Path="FirstName"/>
+                                            <Binding Path="LastName"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Code"
                                         Binding="{Binding Code}" 
                                         Foreground="Black"/>
@@ -179,10 +186,10 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn >
+                    <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Background="Transparent" Foreground="Black" BorderThickness="0"
+                                <Button Background="Transparent" Foreground="Red" BorderThickness="0"
                                         cal:Message.Attach="[Event Click] = [Action OnDeleteDepartment($dataContext)]">
                                     <materialDesign:PackIcon Kind="Trash"/>
                                 </Button>

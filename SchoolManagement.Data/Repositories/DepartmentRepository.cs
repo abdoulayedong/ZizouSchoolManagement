@@ -32,21 +32,7 @@ namespace SchoolManagement.Data.Repositories
 
         public List<DepartmentProfessor> GetDepartments()
         {
-            var DepartmentProfessors = _context.DepartmentProfessors.ToList();
-            //var Department = from department in _context.Departments
-            //                 from professorDepartment in _context.ProfessorDepartments
-            //                 where professorDepartment.DepartmentId == department.Id
-            //                 from professor in _context.Professors
-            //                 where professor.Id == professorDepartment.ProfessorId
-            //                 select new DepartmentDTO
-            //                 {
-            //                     DepartmentId = department.Id,
-            //                     ProfessorId = professor.Id,
-            //                     Code = department.Code,
-            //                     HeadDeparment = professor.FirstName+ " " + professor.LastName,
-            //                     Name = department.Name
-            //                 };
-            //return Department.ToList();
+            var DepartmentProfessors = _context.DepartmentProfessors.ToList();           
             return DepartmentProfessors;
         }
 
@@ -74,19 +60,16 @@ namespace SchoolManagement.Data.Repositories
 
         public async Task<ProfessorDepartment> UpdateProfessorDepartment(ProfessorDepartment professorDepartment)
         {
-            var professor = _context.ProfessorDepartments
-                .Where(p => p.DepartmentId == professorDepartment.DepartmentId && p.ProfessorId == professorDepartment.ProfessorId)
-                .FirstOrDefault();
-            if(professor == null)
-            {
-                await ProfessorDepartment(professorDepartment);
-            }
-            else
-            {
-                professor.IsHead = professorDepartment.IsHead;
-                await _context.SaveChangesAsync();
-            }
+            var professor = _context.ProfessorDepartments.Where(pro => pro.Id == professorDepartment.Id).FirstOrDefault();
+            professor.ProfessorId = professorDepartment.ProfessorId;
+            await _context.SaveChangesAsync();            
             return professor;
+        }
+
+        public async void DeleteProfessorDepartment(ProfessorDepartment professorDepartment)
+        {
+            _context.ProfessorDepartments.Remove(professorDepartment);
+            await _context.SaveChangesAsync();
         }
     }
 }

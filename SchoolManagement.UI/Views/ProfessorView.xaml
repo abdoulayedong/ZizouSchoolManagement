@@ -70,12 +70,32 @@
                 </Button.Content>
             </Button>
 
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="5"
+                        Grid.Column="5"
+                        VerticalAlignment="Center">
+                <TextBox Text="{Binding ProfessorSearch}"
+                         BorderBrush="Blue"
+                         materialDesign:HintAssist.Hint="Search ..."
+                         BorderThickness="0"
+                         Width="170"
+                         Height="auto"/>
+                <Button Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="Black"
+                        cal:Message.Attach="[Event Click] = [Action OnSearchProfessor]">
+                    <materialDesign:PackIcon Kind="Search"/>
+                </Button>
+
+            </StackPanel>
+            
             <Button Height="60"
                     Background="LightBlue"
                     Grid.Column="3"
                     Grid.Row="5"
+                    Visibility="Collapsed"
                     materialDesign:ButtonAssist.CornerRadius="3"
-                    cal:Message.Attach="[Event Click] = [Action UpdateDepartment(">
+                    cal:Message.Attach="[Event Click] = [Action UpdateDepartment">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Margin="-5 0 5 0" 
@@ -93,6 +113,7 @@
             </Button>
 
             <Button Height="60"
+                    Visibility="Collapsed"
                     Background="OrangeRed"
                     Grid.Column="5"
                     Grid.Row="5"
@@ -129,18 +150,44 @@
                       materialDesign:DataGridAssist.ColumnHeaderPadding="5"                              
                       HeadersVisibility="All">
                 <DataGrid.Columns>
-                    <materialDesign:DataGridTextColumn Header="N°"
-                                                        Binding="{Binding Id}" Foreground="Black"  />
-                    <materialDesign:DataGridTextColumn Header="FirstName"
-                                                       Binding="{Binding FirstName}" Foreground="Black" />
-                    <materialDesign:DataGridTextColumn Header="LastName"
-                                                       Binding="{Binding LastName}" Foreground="Black"  />
-                    <materialDesign:DataGridTextColumn Header="Diplome"
-                                                       Binding="{Binding Diplome}" Foreground="Black"  />
-                    <materialDesign:DataGridTextColumn Header="Hiring Date"
-                                                       Binding="{Binding HiringDate, StringFormat=dd/MM/yyyy}" Foreground="Black"/>
-                    <materialDesign:DataGridTextColumn Header="CIN"
-                                                       Binding="{Binding Cin}" Foreground="Black"/>
+                    <!--<DataGridTextColumn Header="N°"
+                                        Binding="{Binding Id}" 
+                                        Foreground="Black"  />-->
+                    <DataGridTextColumn Header="FirstName"
+                                        Binding="{Binding FirstName}" 
+                                        Foreground="Black" />
+                    <DataGridTextColumn Header="LastName"
+                                        Binding="{Binding LastName}" 
+                                        Foreground="Black"  />
+                    <DataGridTextColumn Header="Diplome"
+                                        Binding="{Binding Diplome}"
+                                        Foreground="Black"  />
+                    <DataGridTextColumn Header="Hiring Date"
+                                        Binding="{Binding HiringDate, StringFormat=dd/MM/yyyy}" 
+                                        Foreground="Black"/>
+                    <DataGridTextColumn Header="CIN"
+                                        Binding="{Binding Cin}"
+                                        Foreground="Black"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" Foreground="Black" BorderThickness="0"
+                                        cal:Message.Attach="[Event Click] = [Action OnUpdateProfessor($dataContext)]">
+                                    <materialDesign:PackIcon Kind="Update"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" Foreground="Red" BorderThickness="0"
+                                        cal:Message.Attach="[Event Click] = [Action OnDeleteProfessor($dataContext)]">
+                                    <materialDesign:PackIcon Kind="Trash"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 

@@ -24,8 +24,8 @@ namespace SchoolManagement.UI.ViewModels
         private readonly IEventAggregator _eventAggregator;
         private readonly IWindowManager _manager;
         private readonly SimpleContainer _container;
-        private Department _department = new Department(); 
-
+        private Department _department = new Department();
+        public DepartmentProfessor DepartmentProfessor { get; set; }
         #endregion
 
         #region Constructor
@@ -45,6 +45,7 @@ namespace SchoolManagement.UI.ViewModels
         #region Event Handler
         public Task HandleAsync(DepartmentProfessor message, CancellationToken cancellationToken)
         {
+            DepartmentProfessor = message;
             Department.Id = message.DepartmentId;
             Department.Name = message.Name;
             Department.Code = message.Code;
@@ -88,16 +89,13 @@ namespace SchoolManagement.UI.ViewModels
             }
             if(Professor.Id != Id)
             {
-                var ancienHeadDep = new ProfessorDepartment() { DepartmentId = Department.Id, ProfessorId = Id, IsHead = false };
-                try
+                var newHeadDep = new ProfessorDepartment()
                 {
-                    await _departmentRepository.UpdateProfessorDepartment(ancienHeadDep);
-                }
-                catch (DbException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-                var newHeadDep = new ProfessorDepartment() { DepartmentId = Department.Id, ProfessorId = Id, IsHead = true };
+                    Id = DepartmentProfessor.Id,
+                    DepartmentId = Department.Id,
+                    ProfessorId = Professor.Id, 
+                    IsHead = true 
+                };
                 try
                 {
                     await _departmentRepository.UpdateProfessorDepartment(newHeadDep);

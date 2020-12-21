@@ -15,5 +15,6 @@ namespace SchoolManagement.Data.Repositories
         Task<Department> UpdateDepartment(Department department);
         Task<ProfessorDepartment> ProfessorDepartment(ProfessorDepartment professorDepartment);
         Task<ProfessorDepartment> UpdateProfessorDepartment(ProfessorDepartment professorDepartment);
+        void DeleteProfessorDepartment(ProfessorDepartment professorDepartment);
     }
 }

@@ -4,6 +4,9 @@ using SchoolManagement.Data.DTOs;
 using SchoolManagement.Data.Repositories;
 using SchoolManagement.Domain;
 using SchoolManagement.UI.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,44 +22,16 @@ namespace SchoolManagement.UI.ViewModels
         private readonly ConfirmationDialogHelper _confirmationDialogHelper;
         private DepartmentProfessor department;
         private BindableCollection<DepartmentProfessor> departments = new BindableCollection<DepartmentProfessor>();
-        private bool _isUpdateDepartment;
-
-        public bool IsUpdateDepartment
-        {
-            get { return _isUpdateDepartment; }
-            set 
-            {
-                if(value != _isUpdateDepartment)
-                {
-                    _isUpdateDepartment = value; 
-                    NotifyOfPropertyChange(() => IsUpdateDepartment); 
-                }
-            }
-        }
-
-        private bool _isDeleteDepartment;
-
-        public bool IsDeleteDepartment
-        {
-            get { return _isDeleteDepartment; }
-            set 
-            {
-                if(value != _isDeleteDepartment)
-                {
-                    _isDeleteDepartment = value;
-                    NotifyOfPropertyChange(() => IsDeleteDepartment);
-                }
-            }
-        }
-
+        List<DepartmentProfessor> GetDepartments = new List<DepartmentProfessor>();
+        private string _departmentSearch;
+        Regex fullNameRx = new Regex(@"^[a-z]*(\s[a-z]*)+?$", RegexOptions.IgnoreCase);
+        Regex firstNameOrLastName = new Regex(@"^[a-zÀ-ÿ]*$", RegexOptions.IgnoreCase);
         #endregion
 
         #region Constructor
         public DepartmentViewModel(IDepartmentRepository departmentRepository, IEventAggregator eventAggregator,
                                    IWindowManager manager, SimpleContainer container)
         {
-            IsUpdateDepartment = false;
-            IsDeleteDepartment = false;
             _departmentRepository = departmentRepository;
             _eventAggregator = eventAggregator;
             _manager = manager;
@@ -71,11 +46,9 @@ namespace SchoolManagement.UI.ViewModels
         {
             var departments = _departmentRepository.GetDepartments();
             if(departments.Count != 0)
-            {
-                foreach(var department in departments)
-                {
-                    Departments.Add(department);
-                }
+            {               
+                Departments.AddRange(departments);
+                GetDepartments.AddRange(departments);
             }
             return base.OnInitializeAsync(cancellationToken);
         }
@@ -86,23 +59,57 @@ namespace SchoolManagement.UI.ViewModels
         {
             await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.AddDepartment);
         }
-        
-        public async Task UpdateDepartment()
-        {
-            IsDeleteDepartment = false;
-            IsUpdateDepartment = true;
-        }
 
-        public async Task DeleteDepartment()
+        public async Task OnSearchDepartment()
         {
-            IsUpdateDepartment = false;
-            IsDeleteDepartment = true;
-        }
+            if (String.IsNullOrEmpty(DepartmentSearch) || String.IsNullOrWhiteSpace(DepartmentSearch))
+            {
+                await _confirmationDialogHelper.ErrorWindowShow("Veuillez remplir le champ de recherche.");
+            }
+            else
+            {
+                Departments.Clear();
+                if (firstNameOrLastName.IsMatch(DepartmentSearch))
+                {
+                    for (int i = 0; i < GetDepartments.Count; i++)
+                    {
+                        if (GetDepartments[i].Code.ToLower().Contains(DepartmentSearch.ToLower()))
+                        {
+                            Departments.Add(GetDepartments[i]);
+                        }
+                        else if (GetDepartments[i].Name.ToLower().Contains(DepartmentSearch.ToLower()))
+                        {
+                            Departments.Add(GetDepartments[i]);
+                        }
+                    }
+                }
+                else if (fullNameRx.IsMatch(DepartmentSearch))
+                {
+                    var word = DepartmentSearch.Split(' ');
+                    var countWord = word.Length;
 
-        public async Task OnDesactivate()
-        {
-            IsUpdateDepartment = false;
-            IsDeleteDepartment = false;
+                    foreach (var depart in GetDepartments)
+                    {
+                        int i = 0;
+                        var fullname = depart.Name;
+                        do
+                        {
+                            if (fullname.ToLower().Contains((word[i]).ToLower()))
+                            {
+                                if (i == countWord - 1)
+                                {
+                                    Departments.Add(depart);
+                                }
+                                i++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        } while (i < countWord);
+                    }
+                }
+            }
         }
 
         public async Task OnUpdateDepartment(DepartmentProfessor department)
@@ -141,19 +148,17 @@ namespace SchoolManagement.UI.ViewModels
             get { return department; }
             set 
             {
-                department = value;
-                if (department != null)
-                {
-                    IsUpdateDepartment = true;
-                }
-                else
-                {
-                IsUpdateDepartment = false;
-                NotifyOfPropertyChange(() => IsUpdateDepartment);
+                department = value;               
+                NotifyOfPropertyChange(() => Department);
             }
-            /// Shows and hides the detailed section
+        }
+
+        public string DepartmentSearch
+        {
+            get { return _departmentSearch; }
+            set { _departmentSearch = value; NotifyOfPropertyChange(() => DepartmentSearch); }
         }
     }
         #endregion
-    }
 }
+

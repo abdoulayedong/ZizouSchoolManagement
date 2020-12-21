@@ -40,14 +40,11 @@ namespace SchoolManagement.Data.Repositories
             prof.Cin = professor.Cin;
             prof.Diplome = professor.Diplome;
             prof.Email = professor.Email;
-            prof.HiringDate = professor.HiringDate;
             prof.FirstName = professor.FirstName;
             prof.LastName = professor.LastName;
             prof.PasswordHash = professor.PasswordHash;
             prof.PasswordSalt = professor.PasswordSalt;
-
             prof.MainPhotoUrl = professor.MainPhotoUrl;
-            
             await _context.SaveChangesAsync();
             return prof;
         }
