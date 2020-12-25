@@ -3,6 +3,7 @@
     public enum ViewType
     {
         AddDepartment,
+        DepartmentProfessor,
         Department,
         UpdateDepartment,
         Professor,
@@ -12,6 +13,7 @@
         AddCourse,
         Student,
         AddStudent,
+        UpdateStudent,
         Class,
         AddClass
     }

@@ -34,6 +34,11 @@ namespace SchoolManagement.Data.Repositories
             return _context.Professors.ToList();
         }
 
+        public List<ProfessorDepartment> GetProfessorDepartments()
+        {
+            return _context.ProfessorDepartments.ToList();
+        }
+
         public async Task<Professor> UpdateProfessor(Professor professor)
         {
             var prof = await _context.Professors.FindAsync(professor.Id);

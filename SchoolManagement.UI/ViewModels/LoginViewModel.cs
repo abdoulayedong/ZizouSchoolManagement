@@ -47,13 +47,13 @@ namespace SchoolManagement.UI.ViewModels
 					switch (ex.Message)
 					{
 						case "Bad Request":
-							ErrorMessage = "Pseudo ou mot de passe incorrect";
+							ErrorMessage = "Incorrect login or password";
 							break;
 						case "Unauthorized":
-							ErrorMessage = "Mot de passe incorrect";
+							ErrorMessage = "Accès denied";
 							break;
 						case "Internal Server Error":
-							ErrorMessage = "Une erreur est survenue. Veuillez essayer plus tard!";
+							ErrorMessage = "Network error!";
 							break;
 						default:
 							ErrorMessage = "Une erreur est survenue. Veuillez essayer plus tard!";

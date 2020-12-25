@@ -57,7 +57,7 @@
                     Grid.Row="5"
                     HorizontalContentAlignment="Left"
                     materialDesign:ButtonAssist.CornerRadius="3"
-                    cal:Message.Attach="[Event Click] = [Action AddDepartment]">
+                    cal:Message.Attach="[Event Click] = [Action AddStudent]">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Margin="-5 0 8 0" 
@@ -72,10 +72,30 @@
                 </Button.Content>
             </Button>
 
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="5"
+                        Grid.Column="5"
+                        VerticalAlignment="Center">
+                <TextBox Text="{Binding StudentSearch}"
+                         BorderBrush="Blue"
+                         materialDesign:HintAssist.Hint="Search ..."
+                         BorderThickness="0"
+                         Width="170"
+                         Height="auto"/>
+                <Button Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="Black"
+                        cal:Message.Attach="[Event Click] = [Action OnSearchStudent]">
+                    <materialDesign:PackIcon Kind="Search"/>
+                </Button>
+
+            </StackPanel>
+            
             <Button Height="60"
                     Background="LightBlue"
                     Grid.Column="3"
                     Grid.Row="5"
+                    Visibility="Collapsed"
                     materialDesign:ButtonAssist.CornerRadius="3"
                     cal:Message.Attach="[Event Click] = [Action UpdateDepartment(">
                 <Button.Content>
@@ -94,10 +114,12 @@
                 </Button.Content>
             </Button>
 
+            
             <Button Height="60"
                     Background="OrangeRed"
                     Grid.Column="5"
                     Grid.Row="5"
+                    Visibility="Collapsed"
                     materialDesign:ButtonAssist.CornerRadius="3">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
@@ -121,7 +143,7 @@
                       BorderThickness="0"
                       Foreground="Black"                      
                       AutoGenerateColumns="False"
-                      SelectedItem="{Binding Department}"
+                      SelectedItem="{Binding Student}"
                       SelectionMode="Single"
                       CanUserReorderColumns="False" CanUserResizeColumns="False" 
                       CanUserResizeRows="True" CanUserSortColumns="True"
@@ -130,9 +152,7 @@
                       materialDesign:DataGridAssist.CellPadding="10 5 5 5"                             
                       materialDesign:DataGridAssist.ColumnHeaderPadding="5"                              
                       HeadersVisibility="All">
-                <DataGrid.Columns>
-                    <materialDesign:DataGridTextColumn Width="50" Header="N°"
-                                                        Binding="{Binding Id}" Foreground="Black"  />
+                <DataGrid.Columns>                   
                     <materialDesign:DataGridTextColumn Header="FirstName"
                                                        Binding="{Binding FirstName}" Foreground="Black" />
                     <materialDesign:DataGridTextColumn Header="LastName"
@@ -145,7 +165,26 @@
                                                        Binding="{Binding Address}" Foreground="Black" />
                     <materialDesign:DataGridTextColumn  Header="BirthDate"
                                                        Binding="{Binding BirthDate, StringFormat=dd/MM/yyyy}" Foreground="Black"  />
-
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" Foreground="Black" BorderThickness="0"
+                                        cal:Message.Attach="[Event Click] = [Action OnUpdateStudent($dataContext)]">
+                                    <materialDesign:PackIcon Kind="Update"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" Foreground="Red" BorderThickness="0"
+                                        cal:Message.Attach="[Event Click] = [Action OnDeleteStudent($dataContext)]">
+                                    <materialDesign:PackIcon Kind="Trash"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 

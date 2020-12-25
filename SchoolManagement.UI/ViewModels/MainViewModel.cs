@@ -70,6 +70,7 @@ namespace SchoolManagement.UI.ViewModels
                     ActivateItemAsync(_simpleContainer.GetInstance<StudentViewModel>());
                     break;
                 case ViewType.AddStudent:
+                    ActivateItemAsync(_simpleContainer.GetInstance<AddStudentViewModel>());
                     break;
                 case ViewType.Class:
                     ActivateItemAsync(_simpleContainer.GetInstance<ClassViewModel>());
@@ -82,6 +83,13 @@ namespace SchoolManagement.UI.ViewModels
                     break;
                 case ViewType.UpdateProfessor:
                     ActivateItemAsync(_simpleContainer.GetInstance<UpdateProfessorViewModel>());
+                    break;
+                case ViewType.DepartmentProfessor:
+                    ActivateItemAsync(_simpleContainer.GetInstance<DepartmentProfessorViewModel>());
+                    break;
+                case ViewType.UpdateStudent:
+                    break;
+                default:
                     break;
             };
             return Task.CompletedTask;

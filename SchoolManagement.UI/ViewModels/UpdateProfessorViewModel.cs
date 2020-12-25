@@ -4,13 +4,14 @@ using SchoolManagement.Domain;
 using SchoolManagement.UI.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace SchoolManagement.UI.ViewModels
 {
-    public class UpdateProfessorViewModel : Screen, IHandle<Professor>
+    public class UpdateProfessorViewModel : Screen, IHandle<Professor>, IHandle<ProfessorDepartment>
     {
         #region Private Fields
         private string firstName;
@@ -20,6 +21,8 @@ namespace SchoolManagement.UI.ViewModels
         private string cin;
         private Professor _professor = new Professor();
         public Professor GetProfessor { get; set; }
+        List<ProfessorDepartment> GetProfessorDepartments = new List<ProfessorDepartment>();
+        public ProfessorDepartment GetProfessorDepartment { get; set; }
         private UniversityDiploma _diploma;
         private BindableCollection<DepartmentProfessor> departments = new BindableCollection<DepartmentProfessor>();
         private DepartmentProfessor department;
@@ -56,7 +59,21 @@ namespace SchoolManagement.UI.ViewModels
             Professor.HiringDate = DateTime.Now;
             Professor.Diplome = Diploma;
             Professor.MainPhotoUrl = Photo;
-            await _professorRepository.UpdateProfessor(Professor);
+            try
+            {
+                await _professorRepository.UpdateProfessor(Professor);
+
+                await _departmentRepository.UpdateProfessorDepartment(new ProfessorDepartment() 
+                {
+                    ProfessorId = Professor.Id,
+                    DepartmentId = Department.Id,
+                    IsHead = GetProfessorDepartments.Where(proDep => proDep.ProfessorId == Professor.Id).FirstOrDefault().IsHead
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception de type " + ex.Message);   
+            }
             await OnCancel();
         }
         public async Task OnCancel()
@@ -81,9 +98,11 @@ namespace SchoolManagement.UI.ViewModels
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
             var deps = _departmentRepository.GetDepartments();
+            var profsDep = _departmentRepository.GetProfessorDepartments();
             if (deps.Count != 0)
             {
                 Departments.AddRange(deps);
+                GetProfessorDepartments = profsDep;
             }
             return base.OnInitializeAsync(cancellationToken);
         }
@@ -99,15 +118,31 @@ namespace SchoolManagement.UI.ViewModels
             Photo = message.MainPhotoUrl;
             Cin = message.Cin;
             Diploma = message.Diplome;
-            foreach(var departm in Departments)
+            foreach (var departm in Departments)
             {
-                if(departm.ProfessorId == message.Id)
+                if (departm.ProfessorId == message.Id)
                 {
                     Department = departm;
                     goto end;
                 }
             }
-end :       return Task.CompletedTask;
+        end:return Task.CompletedTask;
+        }
+
+        public Task HandleAsync(ProfessorDepartment message, CancellationToken cancellationToken)
+        {
+            Task.Run(() =>
+            {
+                GetProfessor = _professorRepository.GetProfessorById(message.ProfessorId).Result;
+                Department = Departments.Where(dep => dep.DepartmentId == message.DepartmentId).FirstOrDefault();               
+            });
+            FirstName = GetProfessor.FirstName;
+            LastName = GetProfessor.LastName;
+            Email = GetProfessor.Email;
+            Photo = GetProfessor.MainPhotoUrl;
+            Cin = GetProfessor.Cin;
+            Diploma = GetProfessor.Diplome;
+            return Task.CompletedTask;
         }
         #endregion
 

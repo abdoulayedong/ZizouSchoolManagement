@@ -18,7 +18,7 @@ namespace SchoolManagement.UI.ViewModels
         private IEventAggregator _aggregator;
         private IStudentRepository _studentRepository;
         private IClassRepository _classRepository;
-        private BindableCollection<Student> _students;
+        private BindableCollection<Student> _students = new BindableCollection<Student>();
         private Student _student;
 
 

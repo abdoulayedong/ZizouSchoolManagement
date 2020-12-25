@@ -50,7 +50,8 @@ namespace SchoolManagement.UI.ViewModels
             Professor.MainPhotoUrl = Photo;
             try
             {
-                await _professorRepository.AddProfessor(Professor);
+                var prof = await _professorRepository.AddProfessor(Professor);
+                await _departmentRepository.ProfessorDepartment(new ProfessorDepartment { ProfessorId = prof.Id, DepartmentId = Department.DepartmentId, IsHead = false });
             }catch(Exception ex)
             {
                 Console.WriteLine("Exception de type " + ex.Message);

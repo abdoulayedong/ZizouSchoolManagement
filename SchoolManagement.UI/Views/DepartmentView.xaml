@@ -175,7 +175,17 @@
                                         Foreground="Black"/>
                     <DataGridTextColumn Header="DepartmentName"
                                         Binding="{Binding Name}" 
-                                        Foreground="Black"/>                    
+                                        Foreground="Black"/>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" Foreground="Black" BorderThickness="0"                                        
+                                        cal:Message.Attach="[Event Click] = [Action OnViewDepartment($dataContext)]">
+                                    <materialDesign:PackIcon Kind="Eye"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

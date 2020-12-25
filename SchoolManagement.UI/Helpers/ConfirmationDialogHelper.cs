@@ -38,10 +38,13 @@ namespace SchoolManagement.UI.Helpers
                     await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of delete this department ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CA5100"))));
                     break;
                 case ElementType.Professor:
-                    await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of delete this professor ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00B294"))));
+                    await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of delete this professor ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CA5100"))));
                     break;
                 case ElementType.UpdateDepartment:
-                    await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of stop update this department ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CA5100"))));
+                    await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of stop update this department ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00B294"))));
+                    break;
+                case ElementType.Student:
+                    await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of delete this student ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CA5100"))));
                     break;
                 default:
                     await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Êtes vous certain de vouloir supprimer cet élement ?"));
@@ -82,5 +85,6 @@ namespace SchoolManagement.UI.Helpers
         Department,
         UpdateDepartment,
         Professor,
+        Student
     }
 }

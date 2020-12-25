@@ -36,6 +36,30 @@ namespace SchoolManagement.Data.Repositories
             return DepartmentProfessors;
         }
 
+        public List<ProfessorDepartment> GetProfessorDepartments()
+        {
+            return _context.ProfessorDepartments.ToList();
+        }
+
+        public List<Professor> GetProfessors(DepartmentProfessor department)
+        {
+            var Professors = from depProf in _context.ProfessorDepartments
+                             where depProf.DepartmentId == department.DepartmentId 
+                             from prof in _context.Professors
+                             where prof.Id == depProf.ProfessorId
+                             select new Professor
+                             {
+                                 Id = prof.Id,
+                                 FirstName = prof.FirstName,
+                                 LastName = prof.LastName,
+                                 Cin = prof.Cin,
+                                 Diplome = prof.Diplome,
+                                 Email = prof.Email,
+                                 HiringDate = prof.HiringDate
+                             };
+            return Professors.ToList();
+        }
+
         public async Task<Department> UpdateDepartment(Department department)
         {
             var dep = await _context.Departments.FindAsync(department.Id);
@@ -62,6 +86,8 @@ namespace SchoolManagement.Data.Repositories
         {
             var professor = _context.ProfessorDepartments.Where(pro => pro.Id == professorDepartment.Id).FirstOrDefault();
             professor.ProfessorId = professorDepartment.ProfessorId;
+            professor.DepartmentId = professorDepartment.DepartmentId;
+            professor.IsHead = professorDepartment.IsHead;
             await _context.SaveChangesAsync();            
             return professor;
         }

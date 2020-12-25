@@ -10,6 +10,7 @@ namespace SchoolManagement.Data.Repositories
         void DeleteProfessor(Professor professor);
         Task<Professor> GetProfessorById(int Id);
         List<Professor> GetProfessors();
+        List<ProfessorDepartment> GetProfessorDepartments();
         Task<Professor> UpdateProfessor(Professor professor);
     }
 }

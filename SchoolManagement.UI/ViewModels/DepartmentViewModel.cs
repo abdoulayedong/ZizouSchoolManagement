@@ -112,6 +112,12 @@ namespace SchoolManagement.UI.ViewModels
             }
         }
 
+        public async Task OnViewDepartment(DepartmentProfessor department)
+        {
+            await _eventAggregator.PublishOnBackgroundThreadAsync(ViewType.DepartmentProfessor);
+            await _eventAggregator.PublishOnBackgroundThreadAsync(department);
+        }
+
         public async Task OnUpdateDepartment(DepartmentProfessor department)
         {
             await _eventAggregator.PublishOnBackgroundThreadAsync(ViewType.UpdateDepartment);

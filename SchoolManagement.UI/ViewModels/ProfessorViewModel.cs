@@ -4,6 +4,7 @@ using SchoolManagement.Domain;
 using SchoolManagement.UI.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -23,6 +24,7 @@ namespace SchoolManagement.UI.ViewModels
         private string _professorSearch;
         private Professor professor;   
         private BindableCollection<Professor> professors = new BindableCollection<Professor>();
+        List<ProfessorDepartment> GetProfessorDepartments = new List<ProfessorDepartment>();
         List<Professor> GetProfessors = new List<Professor>();
         Regex fullNameRx = new Regex(@"^[a-z]*(\s[a-z]*)+?$", RegexOptions.IgnoreCase);
         Regex firstNameOrLastName = new Regex(@"^[a-z]*$", RegexOptions.IgnoreCase);
@@ -37,8 +39,7 @@ namespace SchoolManagement.UI.ViewModels
             _eventAggregator = eventAggregator;
             _manager = manager;
             _container = container;
-            _confirmationDialogHelper = new ConfirmationDialogHelper(_manager, _eventAggregator, container);
-            _eventAggregator.SubscribeOnPublishedThread(this);
+            _confirmationDialogHelper = new ConfirmationDialogHelper(_manager, _eventAggregator, _container);
         }
         #endregion
 
@@ -46,10 +47,12 @@ namespace SchoolManagement.UI.ViewModels
         protected override Task OnInitializeAsync(CancellationToken cancellationToken)
         {
             var professor = _professorRepository.GetProfessors();
+            var professorDepartment = _professorRepository.GetProfessorDepartments();
             Task.Run(() =>
             {
                 Professors.AddRange(professor);
                 GetProfessors.AddRange(professor);
+                GetProfessorDepartments.AddRange(professorDepartment);
             });
             return base.OnInitializeAsync(cancellationToken);
         }
@@ -116,7 +119,22 @@ namespace SchoolManagement.UI.ViewModels
         public async Task OnUpdateProfessor(Professor professor)
         {
             await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.UpdateProfessor);
-            await _eventAggregator.PublishOnCurrentThreadAsync(professor);
+            var depId = GetProfessorDepartments.Where(profDepart => profDepart.ProfessorId == professor.Id).First();
+            if(depId != null)
+            {
+                ProfessorDepartment temp = new ProfessorDepartment()
+                {
+                    ProfessorId = professor.Id,
+                    DepartmentId = depId.DepartmentId,
+                    IsHead = depId.IsHead,
+                    Id = depId.Id
+                };
+                await _eventAggregator.PublishOnCurrentThreadAsync(temp);
+            }
+            else
+            {
+                await _eventAggregator.PublishOnCurrentThreadAsync(professor);
+            }
         }
 
         public async Task OnDeleteProfessor(Professor professor)
