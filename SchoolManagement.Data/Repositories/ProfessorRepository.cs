@@ -24,9 +24,10 @@ namespace SchoolManagement.Data.Repositories
             return professor;
         }
 
-        public async Task<Professor> GetProfessorById(int Id)
+        public Professor GetProfessorById(int Id)
         {
-            return await _context.Professors.FindAsync(Id);
+            return _context.Professors.Find(Id);
+          
         }
 
         public List<Professor> GetProfessors()

@@ -85,11 +85,19 @@ namespace SchoolManagement.Data.Repositories
         public async Task<ProfessorDepartment> UpdateProfessorDepartment(ProfessorDepartment professorDepartment)
         {
             var professor = _context.ProfessorDepartments.Where(pro => pro.Id == professorDepartment.Id).FirstOrDefault();
-            professor.ProfessorId = professorDepartment.ProfessorId;
-            professor.DepartmentId = professorDepartment.DepartmentId;
-            professor.IsHead = professorDepartment.IsHead;
-            await _context.SaveChangesAsync();            
-            return professor;
+            if(professor != null)
+            {
+                professor.ProfessorId = professorDepartment.ProfessorId;
+                professor.DepartmentId = professorDepartment.DepartmentId;
+                professor.IsHead = professorDepartment.IsHead;
+                await _context.SaveChangesAsync();
+                return professor;
+            }
+            else
+            {
+                await ProfessorDepartment(professorDepartment);
+                return professorDepartment;
+            }
         }
 
         public async void DeleteProfessorDepartment(ProfessorDepartment professorDepartment)

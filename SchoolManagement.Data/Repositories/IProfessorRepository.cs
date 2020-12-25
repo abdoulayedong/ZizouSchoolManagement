@@ -8,7 +8,7 @@ namespace SchoolManagement.Data.Repositories
     {
         Task<Professor> AddProfessor(Professor professor);
         void DeleteProfessor(Professor professor);
-        Task<Professor> GetProfessorById(int Id);
+        Professor GetProfessorById(int Id);
         List<Professor> GetProfessors();
         List<ProfessorDepartment> GetProfessorDepartments();
         Task<Professor> UpdateProfessor(Professor professor);

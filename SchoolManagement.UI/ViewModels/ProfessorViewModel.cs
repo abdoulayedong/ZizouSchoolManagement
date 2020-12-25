@@ -119,7 +119,8 @@ namespace SchoolManagement.UI.ViewModels
         public async Task OnUpdateProfessor(Professor professor)
         {
             await _eventAggregator.PublishOnCurrentThreadAsync(ViewType.UpdateProfessor);
-            var depId = GetProfessorDepartments.Where(profDepart => profDepart.ProfessorId == professor.Id).First();
+            var depId = GetProfessorDepartments
+                .Where(profDepart => profDepart.ProfessorId == professor.Id).FirstOrDefault();
             if(depId != null)
             {
                 ProfessorDepartment temp = new ProfessorDepartment()

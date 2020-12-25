@@ -6,6 +6,7 @@ using SchoolManagement.Domain;
 using SchoolManagement.UI.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -47,7 +48,7 @@ namespace SchoolManagement.UI.ViewModels
             var departments = _departmentRepository.GetDepartments();
             if(departments.Count != 0)
             {               
-                Departments.AddRange(departments);
+                Departments.AddRange(departments.Where(dep => dep.IsHead == true));
                 GetDepartments.AddRange(departments);
             }
             return base.OnInitializeAsync(cancellationToken);

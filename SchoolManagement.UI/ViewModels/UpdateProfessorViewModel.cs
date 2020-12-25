@@ -62,13 +62,21 @@ namespace SchoolManagement.UI.ViewModels
             try
             {
                 await _professorRepository.UpdateProfessor(Professor);
-
-                await _departmentRepository.UpdateProfessorDepartment(new ProfessorDepartment() 
+                var proDep = new ProfessorDepartment()
                 {
                     ProfessorId = Professor.Id,
-                    DepartmentId = Department.Id,
-                    IsHead = GetProfessorDepartments.Where(proDep => proDep.ProfessorId == Professor.Id).FirstOrDefault().IsHead
-                });
+                    DepartmentId = Department.DepartmentId,
+                };
+                if (GetProfessorDepartments.Where(proDep => proDep.ProfessorId == Professor.Id).FirstOrDefault() != null)
+                {
+                    proDep.IsHead = GetProfessorDepartments.Where(proDep => proDep.ProfessorId == Professor.Id)
+                        .FirstOrDefault().IsHead;
+                }
+                else
+                {
+                    proDep.IsHead = false;
+                }
+                await _departmentRepository.UpdateProfessorDepartment(proDep);
             }
             catch (Exception ex)
             {
@@ -131,17 +139,16 @@ namespace SchoolManagement.UI.ViewModels
 
         public Task HandleAsync(ProfessorDepartment message, CancellationToken cancellationToken)
         {
-            Task.Run(() =>
-            {
-                GetProfessor = _professorRepository.GetProfessorById(message.ProfessorId).Result;
+            
+                GetProfessor = _professorRepository.GetProfessorById(message.ProfessorId);
                 Department = Departments.Where(dep => dep.DepartmentId == message.DepartmentId).FirstOrDefault();               
-            });
-            FirstName = GetProfessor.FirstName;
-            LastName = GetProfessor.LastName;
-            Email = GetProfessor.Email;
-            Photo = GetProfessor.MainPhotoUrl;
-            Cin = GetProfessor.Cin;
-            Diploma = GetProfessor.Diplome;
+                FirstName = GetProfessor.FirstName;
+                LastName = GetProfessor.LastName;
+                Email = GetProfessor.Email;
+                Photo = GetProfessor.MainPhotoUrl;
+                Cin = GetProfessor.Cin;
+                Diploma = GetProfessor.Diplome;
+          
             return Task.CompletedTask;
         }
         #endregion

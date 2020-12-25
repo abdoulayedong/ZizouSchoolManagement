@@ -3,6 +3,7 @@ using Microsoft.Win32;
 using SchoolManagement.Data.Repositories;
 using SchoolManagement.Domain;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -86,7 +87,7 @@ namespace SchoolManagement.UI.ViewModels
             var deps = _departmentRepository.GetDepartments();
             if(deps.Count != 0)
             {
-                Departments.AddRange(deps);
+                Departments.AddRange(deps.Where(dep => dep.IsHead == true));
             }
             return base.OnInitializeAsync(cancellationToken);   
         }
