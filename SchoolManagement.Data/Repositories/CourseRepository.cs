@@ -33,10 +33,10 @@ namespace SchoolManagement.Data.Repositories
         public async Task<Course> UpdateCourse(Course course)
         {
             var cours = await _context.Courses.FindAsync(course.Id);
-            cours.Name = course.Name;
-            cours.Code = course.Code;
-            cours.HoursAmount = course.HoursAmount;
-            cours.TotalWeekAmount = course.TotalWeekAmount;
+            cours.NameCourse = course.NameCourse;
+            cours.CodeCourse = course.CodeCourse;
+            cours.HoursAmountCourse = course.HoursAmountCourse;
+            cours.TotalWeekAmountCourse = course.TotalWeekAmountCourse;
             await _context.SaveChangesAsync();
             return cours;
         }

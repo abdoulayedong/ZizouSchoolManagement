@@ -77,6 +77,7 @@
             </Button>
 
             <Button Height="60"
+                    Visibility="Collapsed"
                     Background="LightBlue"
                     Grid.Column="3"
                     Grid.Row="5"
@@ -99,6 +100,7 @@
             </Button>
 
             <Button Height="60"
+                    Visibility="Collapsed"
                     Background="OrangeRed"
                     Grid.Column="5"
                     Grid.Row="5"
@@ -125,7 +127,7 @@
                       BorderThickness="0"
                       Foreground="Black"                      
                       AutoGenerateColumns="False"
-                      SelectedItem="{Binding Department}"
+                      SelectedItem="{Binding Classe}"
                       SelectionMode="Single"
                       CanUserReorderColumns="False" CanUserResizeColumns="False" 
                       CanUserResizeRows="True" CanUserSortColumns="True"
@@ -135,16 +137,14 @@
                       materialDesign:DataGridAssist.ColumnHeaderPadding="5"                              
                       HeadersVisibility="All">
                 <DataGrid.Columns>
-                    <materialDesign:DataGridTextColumn Width="50" Header="N°"
-                                                        Binding="{Binding Id}" Foreground="Black"  />
                     <materialDesign:DataGridTextColumn Header="Code"
                                                        Binding="{Binding Code}" Foreground="Black" />
                     <materialDesign:DataGridTextColumn Header="ClassName"
                                                        Binding="{Binding Name}" Foreground="Black"  />
                     <materialDesign:DataGridTextColumn Header="NumberOfStudent"
                                                        Binding="{Binding NumberOfStudents}" Foreground="Black" />
-                    <materialDesign:DataGridTextColumn Header="NumberOfProfessor"
-                                                       Binding="{Binding NumberOfProfessors}" Foreground="Black"  />
+                    <materialDesign:DataGridTextColumn Header="Number of professor"
+                                                       Binding="{Binding NumberOfCourses}" Foreground="Black"  />
                 </DataGrid.Columns>
             </DataGrid>
 

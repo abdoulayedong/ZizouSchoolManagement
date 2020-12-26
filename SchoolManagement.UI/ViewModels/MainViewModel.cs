@@ -65,6 +65,7 @@ namespace SchoolManagement.UI.ViewModels
                     ActivateItemAsync(_simpleContainer.GetInstance<CourseViewModel>());
                     break;
                 case ViewType.AddCourse:
+                    ActivateItemAsync(_simpleContainer.GetInstance<AddCourseViewModel>());
                     break;
                 case ViewType.Student:
                     ActivateItemAsync(_simpleContainer.GetInstance<StudentViewModel>());

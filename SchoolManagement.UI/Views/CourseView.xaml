@@ -4,9 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:cal="http://www.caliburnproject.org"
              Height="540"
-             Width="730"
-             xmlns:context="clr-namespace:SchoolManagement.UI.ViewModels"
-             >
+             Width="730">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -66,62 +64,20 @@
                                              Kind="Plus"/>
                         <TextBlock FontSize="15"
                                    VerticalAlignment="Center"
-                                   Text="Add department"/>
+                                   Text="Add Course"/>
 
                     </StackPanel>
                 </Button.Content>
             </Button>
 
-            <Button Height="60"
-                    Background="LightBlue"
-                    Grid.Column="3"
-                    Grid.Row="5"
-                    materialDesign:ButtonAssist.CornerRadius="3"
-                    cal:Message.Attach="[Event Click] = [Action UpdateDepartment]">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Margin="-5 0 5 0" 
-                                             Width="50"
-                                             Height="50"                                                 
-                                             Kind="Update"/>
-
-                        <TextBlock FontSize="15"
-                                       Margin="0 0 0 0"
-                                       VerticalAlignment="Center"
-                                       Text="Update department"/>
-
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-
-            <Button Height="60"
-                    Background="OrangeRed"
-                    Grid.Column="5"
-                    Grid.Row="5"
-                    materialDesign:ButtonAssist.CornerRadius="3">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Margin="-5 0 5 0" 
-                                             Width="50"
-                                             Height="50"                                                 
-                                             Kind="Delete"/>
-
-                        <TextBlock FontSize="15"                                       
-                                       VerticalAlignment="Center"
-                                       Text="Delete department"/>
-
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-
-            <DataGrid ItemsSource="{Binding Departments}"
+            <DataGrid ItemsSource="{Binding Courses}"
                       Grid.Row="7"
                       Grid.Column="0"
                       Grid.ColumnSpan="9"
                       BorderThickness="0"
                       Foreground="Black"                      
                       AutoGenerateColumns="False"
-                      SelectedItem="{Binding Department}"
+                      SelectedItem="{Binding Course}"
                       SelectionMode="Single"
                       CanUserReorderColumns="False" CanUserResizeColumns="False" 
                       CanUserResizeRows="True" CanUserSortColumns="True"
@@ -131,14 +87,47 @@
                       materialDesign:DataGridAssist.ColumnHeaderPadding="5"                              
                       HeadersVisibility="All">
                 <DataGrid.Columns>
-                    <materialDesign:DataGridTextColumn Width="50" Header="N°"
-                                                        Binding="{Binding Id}" Foreground="Black"  />
-                    <materialDesign:DataGridTextColumn Width="100" Header="Code"
-                                                       Binding="{Binding Code}" Foreground="Black" />
-                    <materialDesign:DataGridTextColumn Width="200"  Header="DepartmentName"
-                                                       Binding="{Binding Name}" Foreground="Black"  />
-                    <materialDesign:DataGridTextColumn Width="300"  Header="HeadDepartment"
-                                                       Binding="{Binding HeadDeparment}" Foreground="Black"  />
+                    <materialDesign:DataGridTextColumn Header="Course Name"
+                                                       Binding="{Binding NameCourse}" Foreground="Black"  />
+                    <materialDesign:DataGridTextColumn Header="Code" Foreground="Black"
+                                                       Binding="{Binding CodeCourse}"/>
+                    <materialDesign:DataGridTextColumn Header="Duration in Hours"
+                                                       Binding="{Binding HoursAmountCourse}" Foreground="Black"  />
+                    <materialDesign:DataGridTextColumn Header="Duration in Hours"
+                                                       Binding="{Binding TotalWeekAmountCourse}" Foreground="Black"  />
+                    <materialDesign:DataGridTextColumn Header="Duration in Hours"
+                                                       Binding="{Binding CoefficientCourse}" Foreground="Black"  />
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" Foreground="Black" BorderThickness="0"                                        
+                                        cal:Message.Attach="[Event Click] = [Action OnViewCourse($dataContext)]">
+                                    <materialDesign:PackIcon Kind="Eye"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" Foreground="Black" BorderThickness="0"
+                                        cal:Message.Attach="[Event Click] = [Action OnUpdateCourse($dataContext)]">
+                                    <materialDesign:PackIcon Kind="Update"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="Transparent" Foreground="Red" BorderThickness="0"
+                                        cal:Message.Attach="[Event Click] = [Action OnDeleteCourse($dataContext)]">
+                                    <materialDesign:PackIcon Kind="Trash"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 

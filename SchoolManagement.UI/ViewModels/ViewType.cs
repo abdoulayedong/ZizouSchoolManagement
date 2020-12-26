@@ -11,6 +11,8 @@
         UpdateProfessor,
         Course,
         AddCourse,
+        UpdateCourse,
+        ShowCourse,
         Student,
         AddStudent,
         UpdateStudent,

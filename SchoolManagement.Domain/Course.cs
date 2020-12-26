@@ -11,12 +11,13 @@ namespace SchoolManagement.Domain
         public int Id { get; set; }
         [Required]
         [StringLength(50)]
-        public string Name { get; set; }
+        public string NameCourse { get; set; }
         [Required]
         [StringLength(50)]
-        public string Code { get; set; }
-        public int HoursAmount { get; set; }
-        public int TotalWeekAmount { get; set; }
+        public string CodeCourse { get; set; }
+        public int HoursAmountCourse { get; set; }
+        public int TotalWeekAmountCourse { get; set; }
+        public int CoefficientCourse { get; set; }
         public ICollection<ProfessorCourse> ProfessorCourses { get; set; }
         public ICollection<StudentCourse> StudentCourses { get; set; }
         public ICollection<CourseClass> CourseClasses { get; set; }

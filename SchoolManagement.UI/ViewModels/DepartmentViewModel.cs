@@ -38,7 +38,6 @@ namespace SchoolManagement.UI.ViewModels
             _manager = manager;
             _container = container;
             _confirmationDialogHelper = new ConfirmationDialogHelper(_manager, _eventAggregator, container);
-            _eventAggregator.SubscribeOnPublishedThread(this);
         }
         #endregion
 
