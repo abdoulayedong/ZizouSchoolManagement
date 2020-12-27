@@ -1,0 +1,136 @@
+﻿<UserControl x:Class="SchoolManagement.UI.Views.UpdateClassView"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:cal="http://www.caliburnproject.org"
+             Height="540"
+             Width="730">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="710"/>
+            <ColumnDefinition Width="10"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="520"/>
+            <RowDefinition Height="10"/>
+        </Grid.RowDefinitions>
+
+        <Grid Background="White" Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="UPDATE CLASS" 
+                       Grid.Column="0" Grid.ColumnSpan="7"
+                       Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       FontSize="18"
+                       FontWeight="Bold"/>
+
+            <Rectangle Fill="Black"
+                       Grid.Row="3"
+                       Height="2"
+                       HorizontalAlignment="Center"
+                       Width="130"
+                       Grid.Column="0" 
+                       Grid.ColumnSpan="7"/>
+
+            <Grid Grid.Row="4" Grid.Column="0"
+                  Grid.ColumnSpan="7">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Name" Grid.Column="1"
+                           Grid.Row="1" FontSize="16"
+                           FontWeight="Bold" />
+                <TextBlock Text="Code" Grid.Column="1"
+                           Grid.Row="3" FontSize="16"
+                           FontWeight="Bold"/>
+                <TextBlock Text="Department" Grid.Column="1"
+                           Grid.Row="5" FontSize="16"
+                           FontWeight="Bold"/>
+
+                <TextBox Grid.Row="1"
+                         Text="{Binding Name}"
+                         Grid.Column="3"
+                         BorderBrush="Black"
+                         BorderThickness="0.5"/>
+
+                <TextBox Grid.Row="3"
+                         Grid.Column="3"
+                         Text="{Binding Code}"
+                         BorderBrush="Black"
+                         BorderThickness="0.5"/>
+
+                <ComboBox Grid.Row="5"
+                          Grid.Column="3"
+                          BorderBrush="Black"
+                          ItemsSource="{Binding Departments}"
+                          SelectedValue="{Binding Department}"
+                          BorderThickness="0.5">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+            </Grid>
+            <Button Grid.Column="1"
+                    Grid.Row="6"
+                    Width="100"
+                    HorizontalAlignment="Center"
+                    materialDesign:ButtonAssist.CornerRadius="5"
+                    cal:Message.Attach="[Event Click] = [Action OnUpdateClass]">
+                <Button.Content>
+                    <TextBlock Text="Update"/>
+                </Button.Content>
+            </Button>
+
+            <Button Grid.Column="5"
+                    Width="100"
+                    HorizontalAlignment="Center"
+                    Grid.Row="6" materialDesign:ButtonAssist.CornerRadius="5"
+                    cal:Message.Attach="[Event Click] = [Action OnClose]">
+                <Button.Content>
+                    <TextBlock Text="Cancel" VerticalAlignment="Center"/>
+                </Button.Content>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

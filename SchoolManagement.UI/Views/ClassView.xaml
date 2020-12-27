@@ -7,9 +7,6 @@
              Width="730"
              xmlns:context="clr-namespace:SchoolManagement.UI.ViewModels"
              >
-    <UserControl.DataContext>
-        <context:ClassViewModel/>
-    </UserControl.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -61,7 +58,7 @@
                     Grid.Row="5"
                     HorizontalContentAlignment="Left"
                     materialDesign:ButtonAssist.CornerRadius="3"
-                    cal:Message.Attach="[Event Click] = [Action AddDepartment]">
+                    cal:Message.Attach="[Event Click] = [Action AddClass]">
                 <Button.Content>
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Margin="-5 0 8 0" 
@@ -76,49 +73,23 @@
                 </Button.Content>
             </Button>
 
-            <Button Height="60"
-                    Visibility="Collapsed"
-                    Background="LightBlue"
-                    Grid.Column="3"
-                    Grid.Row="5"
-                    materialDesign:ButtonAssist.CornerRadius="3"
-                    cal:Message.Attach="[Event Click] = [Action UpdateDepartment(">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Margin="-5 0 5 0" 
-                                             Width="50"
-                                             Height="50"                                                 
-                                             Kind="Update"/>
-
-                        <TextBlock FontSize="15"
-                                       Margin="0 0 0 0"
-                                       VerticalAlignment="Center"
-                                       Text="Update class"/>
-
-                    </StackPanel>
-                </Button.Content>
-            </Button>
-
-            <Button Height="60"
-                    Visibility="Collapsed"
-                    Background="OrangeRed"
-                    Grid.Column="5"
-                    Grid.Row="5"
-                    materialDesign:ButtonAssist.CornerRadius="3">
-                <Button.Content>
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Margin="-5 0 5 0" 
-                                             Width="50"
-                                             Height="50"                                                 
-                                             Kind="Delete"/>
-
-                        <TextBlock FontSize="15"                                       
-                                       VerticalAlignment="Center"
-                                       Text="Delete class"/>
-
-                    </StackPanel>
-                </Button.Content>
-            </Button>
+            <StackPanel Orientation="Horizontal"
+                        Grid.Row="5"
+                        Grid.Column="5"
+                        VerticalAlignment="Center">
+                <TextBox Text="{Binding ClassSearch}"
+                         BorderBrush="Blue"
+                         materialDesign:HintAssist.Hint="Search ..."
+                         BorderThickness="0"
+                         Width="170"
+                         Height="auto"/>
+                <Button Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="Black"
+                        cal:Message.Attach="[Event Click] = [Action OnSearchClass]">
+                    <materialDesign:PackIcon Kind="Search"/>
+                </Button>
+            </StackPanel>
 
             <DataGrid ItemsSource="{Binding Classes}"
                       Grid.Row="7"
@@ -127,7 +98,7 @@
                       BorderThickness="0"
                       Foreground="Black"                      
                       AutoGenerateColumns="False"
-                      SelectedItem="{Binding Classe}"
+                      SelectedItem="{Binding Class}"
                       SelectionMode="Single"
                       CanUserReorderColumns="False" CanUserResizeColumns="False" 
                       CanUserResizeRows="True" CanUserSortColumns="True"
@@ -137,14 +108,87 @@
                       materialDesign:DataGridAssist.ColumnHeaderPadding="5"                              
                       HeadersVisibility="All">
                 <DataGrid.Columns>
-                    <materialDesign:DataGridTextColumn Header="Code"
-                                                       Binding="{Binding Code}" Foreground="Black" />
-                    <materialDesign:DataGridTextColumn Header="ClassName"
-                                                       Binding="{Binding Name}" Foreground="Black"  />
-                    <materialDesign:DataGridTextColumn Header="NumberOfStudent"
-                                                       Binding="{Binding NumberOfStudents}" Foreground="Black" />
-                    <materialDesign:DataGridTextColumn Header="Number of professor"
-                                                       Binding="{Binding NumberOfCourses}" Foreground="Black"  />
+                    <DataGridTemplateColumn Header="Code">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Code}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Class Name">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Number of students">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="5"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock VerticalAlignment="Center" 
+                                               Grid.Column="1" 
+                                               Text="{Binding NumberOfStudents}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Number of professors">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid HorizontalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="5"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="1"
+                                               VerticalAlignment="Center"
+                                               Text="{Binding NumberOfProfessors}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="5"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="5"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="5"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="5"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="1"
+                                            Background="Transparent" 
+                                            BorderThickness="0"
+                                            cal:Message.Attach="[Event Click] = [Action OnViewClass($dataContext)]">
+                                        <materialDesign:PackIcon Kind="Eye" Foreground="Black"/>
+                                    </Button>
+                                    <Button Grid.Column="3"
+                                            Background="Transparent" 
+                                            BorderThickness="0"
+                                            cal:Message.Attach="[Event Click] = [Action OnUpdateClass($dataContext)]">
+                                        <materialDesign:PackIcon Kind="Update" Foreground="Black"/>
+                                    </Button>
+                                    <Button Grid.Column="5"
+                                            Background="Transparent" 
+                                            BorderThickness="0"
+                                            cal:Message.Attach="[Event Click] = [Action OnDeleteClass($dataContext)]">
+                                        <materialDesign:PackIcon Kind="Trash" Foreground="OrangeRed"/>
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 

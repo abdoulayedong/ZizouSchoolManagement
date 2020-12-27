@@ -29,8 +29,8 @@ namespace SchoolManagement.Data.Repositories
 
         public List<Class> GetClasses()
         {
-            //return _context.Classes.ToList();
-            return new List<Class>();
+            return _context.Classes.ToList();
+            //return new List<Class>();
         }
 
         public async Task<Class> UpdateClass(Class @class)
@@ -38,6 +38,7 @@ namespace SchoolManagement.Data.Repositories
             var clas = await _context.Classes.FindAsync(@class.Id);
             clas.Name = @class.Name;
             clas.Code = @class.Code;
+            clas.DepartmentId = @class.DepartmentId;
             clas.NumberOfCourses = @class.NumberOfCourses;
             clas.NumberOfProfessors = @class.NumberOfProfessors;
             clas.NumberOfStudents = @class.NumberOfStudents;

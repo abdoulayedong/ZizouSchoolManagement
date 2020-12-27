@@ -17,6 +17,8 @@
         AddStudent,
         UpdateStudent,
         Class,
-        AddClass
+        AddClass,
+        ShowClass,
+        UpdateClass
     }
 }

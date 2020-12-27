@@ -77,6 +77,7 @@ namespace SchoolManagement.UI.ViewModels
                     ActivateItemAsync(_simpleContainer.GetInstance<ClassViewModel>());
                     break;
                 case ViewType.AddClass:
+                    ActivateItemAsync(_simpleContainer.GetInstance<AddClassViewModel>());
                     break;
                 case ViewType.UpdateDepartment:
                     var vm = _simpleContainer.GetInstance<UpdateDepartmentViewModel>();
@@ -89,6 +90,16 @@ namespace SchoolManagement.UI.ViewModels
                     ActivateItemAsync(_simpleContainer.GetInstance<DepartmentProfessorViewModel>());
                     break;
                 case ViewType.UpdateStudent:
+                    break;
+                case ViewType.UpdateCourse:
+                    break;
+                case ViewType.ShowCourse:
+                    break;
+                case ViewType.ShowClass:
+                    ActivateItemAsync(_simpleContainer.GetInstance<ShowClassViewModel>());
+                    break;
+                case ViewType.UpdateClass:
+                    ActivateItemAsync(_simpleContainer.GetInstance<UpdateClassViewModel>());
                     break;
                 default:
                     break;

@@ -49,6 +49,12 @@ namespace SchoolManagement.UI.Helpers
                 case ElementType.Course:
                     await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of delete this course ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CA5100"))));
                     break;
+                case ElementType.Class:
+                    await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of delete this class ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#CA5100"))));
+                    break;
+                case ElementType.UpdateClass:
+                    await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Are you sure of stop update this class ?", new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00B294"))));
+                    break;
                 default:
                     await _eventAggregator.PublishOnUIThreadAsync(new ConfirmationDialogModel("Êtes vous certain de vouloir supprimer cet élement ?"));
                     break;
@@ -89,6 +95,8 @@ namespace SchoolManagement.UI.Helpers
         UpdateDepartment,
         Professor,
         Course,
-        Student
+        Student,
+        Class,
+        UpdateClass
     }
 }

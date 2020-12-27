@@ -25,6 +25,7 @@ namespace SchoolManagement.Domain
         public int NumberOfProfessors { get; set; }
 
         //1- One to many relationship with Departement
+        public int DepartmentId { get; set; }
         public Department Department { get; set; }
         public ICollection<Student> Students { get; set; }
 
