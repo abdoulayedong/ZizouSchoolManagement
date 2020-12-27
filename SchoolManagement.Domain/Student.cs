@@ -15,6 +15,7 @@ namespace SchoolManagement.Domain
         public DateTime InscriptionDate { get; set; }
 
         //1- One to many relationship with Class
+        public int ClassId { get; set; }
         public Class Class { get; set; }
         //2- Many to many relationship with Courses
         public ICollection<StudentCourse> StudentCourses { get; set; }

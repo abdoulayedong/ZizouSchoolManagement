@@ -1,6 +1,7 @@
 ﻿using Caliburn.Micro;
 using SchoolManagement.Data.Repositories;
 using SchoolManagement.Domain;
+using SchoolManagement.UI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,13 +22,15 @@ namespace SchoolManagement.UI.ViewModels
         private string phoneNumber;
         private Gender _studentGender;
         private UniversityDiploma _studiesGrade;
-        private BindableCollection<Class> _classes;
+        private BindableCollection<Class> _classes 
+            = new BindableCollection<Class>();
         private Class _class;
         private readonly IWindowManager _manager;
         private readonly IEventAggregator _eventAggregator;
         private readonly SimpleContainer _container;
         private readonly IStudentRepository _studentRepository;
         private readonly IClassRepository _classRepository;
+        private readonly ConfirmationDialogHelper _confirmationDialogHelper;
         #endregion
 
         #region Constructor
@@ -39,6 +42,7 @@ namespace SchoolManagement.UI.ViewModels
             _container = container;
             _studentRepository = studentRepository;
             _classRepository = classRepository;
+            _confirmationDialogHelper = new ConfirmationDialogHelper(_manager, _eventAggregator, _container);
         }
         #endregion
 
@@ -57,25 +61,33 @@ namespace SchoolManagement.UI.ViewModels
         #region Method
         public async Task OnSave()
         {
-            Student.FirstName = FirstName;
-            Student.LastName = LastName;
-            Student.Address = Adresse;
-            Student.Email = Email;
-            Student.BirthDate = BirthDate;
-            Student.PhoneNumber = PhoneNumber;
-            Student.Gender = Gender;
-            Student.InscriptionDate = DateTime.Now;
-            Student.StudiesGrade = StudiesGrade;
-            Student.MainPhotoUrl = Photo;
-            try
+            if(Class == null)
             {
-                await _studentRepository.AddStudent(Student);
+                await _confirmationDialogHelper.ErrorWindowShow("Can you selected class please?");
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine("Exception de type " + ex.Message);
+                Student.FirstName = FirstName;
+                Student.LastName = LastName;
+                Student.Address = Adresse;
+                Student.Email = Email;
+                Student.BirthDate = BirthDate;
+                Student.PhoneNumber = PhoneNumber;
+                Student.Gender = Gender;
+                Student.InscriptionDate = DateTime.Now;
+                Student.StudiesGrade = StudiesGrade;
+                Student.MainPhotoUrl = Photo;
+                Student.ClassId = Class.Id;
+                try
+                {
+                    await _studentRepository.AddStudent(Student);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Exception de type " + ex.Message);
+                }
+                await OnCancel();
             }
-            await OnCancel();
         }
         public async Task OnCancel()
         {
