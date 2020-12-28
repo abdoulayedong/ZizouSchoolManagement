@@ -48,20 +48,19 @@ namespace SchoolManagement.UI.ViewModels
             {
                 var students = _studentRepository.GetStudents();
                 TotalStudent = students.Count;
-                foreach(var student in students)
-                {
-                    if(student.Gender == Gender.Femme)
-                    {
-                        TotalFille ++;
-                    }else if (student.Gender == Gender.Homme)
-                    {
-                        TotalGarcon ++;
-                    }
-                }
                 if(students.Count != 0)
                 {
+                    foreach(var student in students)
+                    {
+                        if(student.Gender == Gender.Femme)
+                        {
+                            TotalFille ++;
+                        }else if (student.Gender == Gender.Homme)
+                        {
+                            TotalGarcon ++;
+                        }
+                    }
                     Students.AddRange(students);
-
                 }
             });
             return base.OnInitializeAsync(cancellationToken);

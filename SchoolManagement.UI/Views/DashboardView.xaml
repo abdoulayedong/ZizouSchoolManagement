@@ -108,7 +108,7 @@
                                              Kind="GenderFemale"/>
                         <StackPanel>
                             <TextBlock FontSize="25"
-                                   Margin="70 0 0 0" Text="{Binding TotatFille}"/>
+                                   Margin="70 0 0 0" Text="{Binding TotalFille}"/>
                             <TextBlock FontSize="12"
                                        Margin="8 0 0 0"
                                        Text="Filles inscrites"/>
