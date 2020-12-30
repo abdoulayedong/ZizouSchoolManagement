@@ -1,9 +1,15 @@
 ﻿using Caliburn.Micro;
+using SchoolManagement.Data.Repositories;
+using SchoolManagement.Domain;
+using SchoolManagement.UI.Helpers;
 using System;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace SchoolManagement.UI.ViewModels
 {
-    public class UpdateStudentViewModel : Screen, IDataErrorInfo
+    public class UpdateStudentViewModel : Screen, IHandle<Student>, IDataErrorInfo
     {
         #region Private Fields
         private string firstName;
@@ -26,6 +32,65 @@ namespace SchoolManagement.UI.ViewModels
         private readonly ConfirmationDialogHelper _confirmationDialogHelper;
         #endregion
 
+        #region IDataErrorInfo
+        public string Error
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string this[string columnName] 
+        {
+            get
+            {
+                if("FirstName" == columnName)
+                {
+                    if (String.IsNullOrEmpty(FirstName))
+                    {
+                        return "Please enter a Firstname";
+                    }
+                }
+                else if("LastName" == columnName)
+                {
+                    if (String.IsNullOrEmpty(LastName))
+                    {
+                        return "Please enter a Lastname";
+                    }
+                }
+                else if ("Email" == columnName)
+                {
+                    if (String.IsNullOrEmpty(Email))
+                    {
+                        return "Please enter an Email";
+                    }
+                }
+                else if ("Photo" == columnName)
+                {
+                    if (String.IsNullOrEmpty(Photo))
+                    {
+                        return "Please enter an Photo ";
+                    }
+                }
+                else if ("Adresse" == columnName)
+                {
+                    if (String.IsNullOrEmpty(Adresse))
+                    {
+                        return "Please enter an Adresse";
+                    }
+                }
+                else if ("PhoneNumber" == columnName)
+                {
+                    if (String.IsNullOrEmpty(PhoneNumber) )
+                    {
+                        return "Please enter a Phonenumber";
+                    }else if (PhoneNumber.Length > 8 || PhoneNumber.Length < 8)
+                    {
+                        return "The phonenumber contain 8 characters.";
+                    }
+                }
+                return "";
+            }
+        }
+        #endregion
         #region Constructor
         public UpdateStudentViewModel(IWindowManager manager, IEventAggregator eventAggregator, SimpleContainer container,
             IStudentRepository studentRepository, IClassRepository classRepository)
@@ -36,6 +101,7 @@ namespace SchoolManagement.UI.ViewModels
             _studentRepository = studentRepository;
             _classRepository = classRepository;
             _confirmationDialogHelper = new ConfirmationDialogHelper(_manager, _eventAggregator, _container);
+            _eventAggregator.SubscribeOnPublishedThread(this);
         }
         #endregion
 
@@ -52,9 +118,9 @@ namespace SchoolManagement.UI.ViewModels
         #endregion
 
         #region Method
-        public async Task OnSave()
+        public async Task OnUpdate()
         {
-            if (Class == null)
+            if (Class == null || String.IsNullOrEmpty(Photo))
             {
                 await _confirmationDialogHelper.ErrorWindowShow("Can you selected class please?");
             }
@@ -67,13 +133,12 @@ namespace SchoolManagement.UI.ViewModels
                 Student.BirthDate = BirthDate;
                 Student.PhoneNumber = PhoneNumber;
                 Student.Gender = Gender;
-                Student.InscriptionDate = DateTime.Now;
                 Student.StudiesGrade = StudiesGrade;
                 Student.MainPhotoUrl = Photo;
                 Student.ClassId = Class.Id;
                 try
                 {
-                    await _studentRepository.AddStudent(Student);
+                    await _studentRepository.UpdateStudent(Student);
                 }
                 catch (Exception ex)
                 {
@@ -98,6 +163,26 @@ namespace SchoolManagement.UI.ViewModels
             }
             return Task.CompletedTask;
         }
+
+        #region Event Handler
+        public Task HandleAsync(Student message, CancellationToken cancellationToken)
+        {
+            Student = message;
+            FirstName = message.FirstName;
+            LastName = message.LastName;
+            Email = message.Email;
+            BirthDate = message.BirthDate;
+            Adresse = message.Address;
+            PhoneNumber = message.PhoneNumber;
+            Gender = message.Gender;
+            StudiesGrade = message.StudiesGrade;
+            Photo = message.MainPhotoUrl;
+            Class = _classRepository.GetClassById(message.ClassId).Result;
+            Class.Id = message.ClassId;
+            return Task.CompletedTask;
+        }
+        #endregion
+
         #endregion
 
         #region Public Fields
@@ -163,6 +248,7 @@ namespace SchoolManagement.UI.ViewModels
             set { _class = value; NotifyOfPropertyChange(() => Class); }
         }
         public Student Student { get; set; } = new Student();
+
         #endregion
 
 

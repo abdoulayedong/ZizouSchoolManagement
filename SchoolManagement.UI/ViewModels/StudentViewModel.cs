@@ -74,6 +74,57 @@ namespace SchoolManagement.UI.ViewModels
                 _studentRepository.DeleteStudent(student);
             }
         }
+        public async Task OnSearchStudent()
+        {
+            if (String.IsNullOrEmpty(StudentSearch) || String.IsNullOrWhiteSpace(StudentSearch))
+            {
+                await _confirmationDialogHelper.ErrorWindowShow("Veuillez remplir le champ de recherche.");
+            }
+            else
+            {
+                Students.Clear();
+                if (firstNameOrLastName.IsMatch(StudentSearch))
+                {
+                    for (int i = 0; i < GetStudents.Count; i++)
+                    {
+                        if (GetStudents[i].FirstName.ToLower().Contains(StudentSearch.ToLower()))
+                        {
+                            Students.Add(GetStudents[i]);
+                        }
+                        else if (GetStudents[i].LastName.ToLower().Contains(StudentSearch.ToLower()))
+                        {
+                            Students.Add(GetStudents[i]);
+                        }
+                    }
+                }
+                else if (fullNameRx.IsMatch(StudentSearch))
+                {
+                    var word = StudentSearch.Split(' ');
+                    var countWord = word.Length;
+
+                    foreach (var student in GetStudents)
+                    {
+                        int i = 0;
+                        var fullname = student.FirstName + " " + student.LastName;
+                        do
+                        {
+                            if (fullname.ToLower().Contains((word[i]).ToLower()))
+                            {
+                                if (i == countWord - 1)
+                                {
+                                    Students.Add(student);
+                                }
+                                i++;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        } while (i < countWord);
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Public fields

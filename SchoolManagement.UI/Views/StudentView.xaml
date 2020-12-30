@@ -4,8 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:cal="http://www.caliburnproject.org"
              Height="540"
-             Width="730"
-             xmlns:context="clr-namespace:SchoolManagement.UI.ViewModels"        >
+             Width="730">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>

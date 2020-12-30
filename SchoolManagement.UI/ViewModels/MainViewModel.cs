@@ -90,6 +90,7 @@ namespace SchoolManagement.UI.ViewModels
                     ActivateItemAsync(_simpleContainer.GetInstance<DepartmentProfessorViewModel>());
                     break;
                 case ViewType.UpdateStudent:
+                    ActivateItemAsync(_simpleContainer.GetInstance<UpdateStudentViewModel>());
                     break;
                 case ViewType.UpdateCourse:
                     break;
